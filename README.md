@@ -1,4 +1,5 @@
 # chat-example
+[![Build Status](https://travis-ci.org/pgerhard/chat-server-cloud-computing-hochschule-reutlingen.svg?branch=master)](https://travis-ci.org/pgerhard/chat-server-cloud-computing-hochschule-reutlingen)
 
 This is the source code for a very simple chat example used for
 the [Getting Started](http://socket.io/get-started/chat/) guide
