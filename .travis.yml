@@ -14,5 +14,11 @@ services:
 before_install:
 - ./ci-cd-scripts/environment_information.sh
 
+before_script:
+  - npm install -g @angular/cli
+
 script:
-- echo "Build currently undefined"
+- cd ci-cd-scripts/
+- echo "Starting backend build"
+- echo "Starting frontend build"
+- ./build_angular.sh
