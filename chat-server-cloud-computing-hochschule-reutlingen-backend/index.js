@@ -11,9 +11,11 @@ io.on("connection", function(socket) {
   console.log("A user has connected");
   io.emit("chat message", "A new user has connected");
 
-  socket.on("chat message", function(msg) {
-    console.log(`Message reads '${msg}'`);
-    io.emit("chat message", msg);
+  socket.on("new_message", function(msg) {
+    console.log(
+      `Message reads '${msg._content}', timestamp '${msg._timestamp}'`
+    );
+    io.emit("broadcast_message", msg);
   });
 
   socket.on("disconnect", function() {

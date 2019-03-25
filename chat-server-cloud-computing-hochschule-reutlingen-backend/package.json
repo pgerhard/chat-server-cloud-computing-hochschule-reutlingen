@@ -7,6 +7,7 @@
     "socket.io": "^1.7.4"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "debug": "node $NODE_DEBUG_OPTION index.js"
   }
 }

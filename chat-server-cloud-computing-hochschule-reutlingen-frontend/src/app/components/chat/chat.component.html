@@ -53,41 +53,18 @@
     </div>
     <div class="mesgs">
       <div class="msg_history">
-        <div class="incoming_msg">
-          <div class="incoming_msg_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
-          <div class="received_msg">
-            <div class="received_withd_msg">
-              <p>Hi</p>
-              <span class="time_date"> 11:01 AM    |    June 9</span></div>
-          </div>
-        </div>
 
-        <div class="incoming_msg">
-          <div class="incoming_msg_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
-          <div class="received_msg">
-            <div class="received_withd_msg">
-              <p>Gehen wir am Freitag ins Kino?</p>
-              <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-          </div>
-        </div>
-        <div class="outgoing_msg">
-          <div class="sent_msg">
-            <p>Hey, ja gerne! So um 19:00?</p>
-            <span class="time_date"> 11:01 AM    |    Today</span> </div>
-        </div>
-        <div class="incoming_msg">
-          <div class="incoming_msg_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
-          <div class="received_msg">
-            <div class="received_withd_msg">
-              <p>Ok,bis morgen.</p>
-              <span class="time_date"> 11:01 AM    |    Today</span></div>
-          </div>
-        </div>
+        <ul>
+          <li *ngFor="let msg of messages">
+            <app-chat-message [chatMessage]="msg"></app-chat-message>
+          </li>
+        </ul>
       </div>
+
       <div class="type_msg">
         <div class="input_msg_write">
-          <input type="text" class="write_msg" placeholder="Type a message" />
-          <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+          <input type="text" class="write_msg" [(ngModel)]="message" placeholder="Type a message" />
+          <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
