@@ -1,6 +1,6 @@
 /*---------chat window---------------*/
-.container{
-  max-width:900px;
+.container {
+  max-width: 900px;
 }
 .inbox_people {
   background: #fff;
@@ -29,7 +29,6 @@
   display: inline-block;
   text-align: right;
   width: 60%;
-
 }
 
 .headind_srch {
@@ -39,7 +38,7 @@
 }
 
 .recent_heading h4 {
-  color: #D2691E;
+  color: #d2691e;
   font-size: 16px;
   margin: auto;
   line-height: 29px;
@@ -58,7 +57,7 @@
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
   border: medium none;
   padding: 0;
-  color: #D2691E;
+  color: #d2691e;
   font-size: 18px;
 }
 
@@ -93,7 +92,7 @@
 }
 
 .chat_img img {
-  width: 100%
+  width: 100%;
 }
 
 .chat_ib {
@@ -159,14 +158,14 @@
   width: 57%;
 }
 
-.mesgs{
+.mesgs {
   float: left;
   padding: 30px 15px 0 25px;
-  width:70%;
+  width: 70%;
 }
 
 .sent_msg p {
-  background:#D2691E;
+  background: #d2691e;
   border-radius: 12px 15px 15px 0;
   font-size: 14px;
   margin: 0;
@@ -192,7 +191,7 @@
   font-size: 15px;
   min-height: 48px;
   width: 100%;
-  outline:none;
+  outline: none;
 }
 
 .type_msg {
@@ -201,8 +200,8 @@
 }
 
 .msg_send_btn {
-  background: #D2691E none repeat scroll 0 0;
-  border:none;
+  background: #d2691e none repeat scroll 0 0;
+  border: none;
   border-radius: 50%;
   color: #fff;
   cursor: pointer;

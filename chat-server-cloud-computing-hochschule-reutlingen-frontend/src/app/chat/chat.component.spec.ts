@@ -10,7 +10,7 @@ describe('ChatComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ChatComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
