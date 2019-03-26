@@ -11,8 +11,23 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   btnClick() {
+
     this.router.navigateByUrl('/chatroom');
   }
+
+  loginUser(e){
+   e.preventDefault();
+   var username = e.target.elements[0].value;
+   if (username.length<1 || username.length>10){
+     console.log("Bitte gültige Eingabe")
+   }
+   else{
+     console.log(username);
+     this.btnClick();
+   }
+
+}
+
 
 }
 
