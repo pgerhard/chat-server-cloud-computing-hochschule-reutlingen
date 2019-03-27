@@ -13,7 +13,7 @@ DOCKER_USERNAME=$1
 echo "INFO: Parse commit hash"
 GIT_HASH=$(git log -1 --pretty=%H)
 
-echo "INFO: Clean up dist directory "BACKEND_DIRECTORY/$BUILD_OUTPUT_DIR
+echo "INFO: Clean up dist directory "$PROJECT_DIRECTORY/$BUILD_OUTPUT_DIR
 rm -Rf $PROJECT_DIRECTORY/$BUILD_OUTPUT_DIR
 
 echo "INFO: Create build output dir "$PROJECT_DIRECTORY/$BUILD_OUTPUT_DIR

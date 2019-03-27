@@ -21,4 +21,4 @@ script:
   - echo "Starting backend build"
   - ./ci-cd-scripts/build_node.sh $DOCKER_USERNAME $DOCKER_PASSWORD
   - echo "Starting frontend build"
-  - ./ci-cd-scripts/build_angular.sh
+  - ./ci-cd-scripts/build_angular.sh $DOCKER_USERNAME $DOCKER_PASSWORD
