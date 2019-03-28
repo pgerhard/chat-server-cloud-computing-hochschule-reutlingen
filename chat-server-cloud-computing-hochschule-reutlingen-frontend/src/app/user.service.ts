@@ -1,5 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { User } from "./user";
+import {DateFormatter} from "@angular/common/src/pipes/deprecated/intl";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +19,10 @@ export class UserService {
     if (jsonUser) {
       const user = new User();
       user.name = jsonUser._name;
+      user.date = new Date().toString();
+
+
+
       return user;
     } else {
       return null;

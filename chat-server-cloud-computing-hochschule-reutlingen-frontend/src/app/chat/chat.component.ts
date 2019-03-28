@@ -9,5 +9,7 @@ import { UserService } from "../user.service";
 export class ChatComponent implements OnInit {
   constructor(private userService: UserService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 }

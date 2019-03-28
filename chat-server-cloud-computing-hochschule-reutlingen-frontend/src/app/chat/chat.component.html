@@ -23,33 +23,11 @@
       </div>
       <div class="inbox_chat scroll">
         <div class="chat_list active_chat">
-
           <div class="chat_people">
-            <div>
-              {{userService.retrieveLoggedInUser().name}}
-            </div>
             <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
             <div class="chat_ib">
-              <h5>#phillip_gerhard <span class="chat_date">Mar 25</span></h5>
+              <h5>{{userService.retrieveLoggedInUser().name}}<span class="chat_date">{{userService.retrieveLoggedInUser().getDate()}}</span></h5>
               <p> Hallo, wie geht's dir?</p>
-            </div>
-          </div>
-        </div>
-        <div class="chat_list">
-          <div class="chat_people">
-            <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
-            <div class="chat_ib">
-              <h5>#tomas_müller <span class="chat_date">Mar 25</span></h5>
-              <p>Die Vorlesungsplan wurde geändert.</p>
-            </div>
-          </div>
-        </div>
-        <div class="chat_list">
-          <div class="chat_people">
-            <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
-            <div class="chat_ib">
-              <h5>#kristina <span class="chat_date">Mar 25</span></h5>
-              <p>ok, bis morgen.</p>
             </div>
           </div>
         </div>
