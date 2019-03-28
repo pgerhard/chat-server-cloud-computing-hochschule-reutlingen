@@ -7,7 +7,7 @@ import { UserService } from "../user.service";
   styleUrls: ["./chat.component.scss"]
 })
 export class ChatComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(public userService: UserService) {}
 
   ngOnInit() {
 
