@@ -3,9 +3,9 @@
 PROJECT_DIRECTORY="chat-server-cloud-computing-hochschule-reutlingen-backend"
 PROJECT_SRC="src"
 BUILD_OUTPUT_DIR="dist"
-CI_CD_DIRECTORY="ci-cd-scripts"
-DOCKERFILE_SRC_DIR="docker"
-DOCKERFILE_SRC_NAME="Dockerfile_Backend"
+CI_CD_DIRECTORY="ci-cd"
+DOCKERFILE_SRC_DIR="docker/server"
+DOCKERFILE_SRC_NAME="Dockerfile"
 DOCKERFILE_TRGT_NAME="Dockerfile"
 DOCKER_PASSWORD=$2
 DOCKER_USERNAME=$1
@@ -35,9 +35,9 @@ cp package*.json $BUILD_OUTPUT_DIR/$PROJECT_DIRECTORY
 echo "INFO: Build and Tag Docker container"
 docker build \
     -t pgerhard/chat-server-cloud-computing-hochschule-reutlingen-backend:${GIT_HASH}  \
-    --build-arg BUILD_OUTPUT_DIR=${BUILD_OUTPUT_DIR} \
     --build-arg PROJECT_DIRECTORY=${PROJECT_DIRECTORY} \
     --build-arg PROJECT_SRC=${PROJECT_SRC} dist/
+
 docker tag pgerhard/chat-server-cloud-computing-hochschule-reutlingen-backend:${GIT_HASH} pgerhard/chat-server-cloud-computing-hochschule-reutlingen-backend:latest
 
 echo "INFO: Push Docker container to Docker Hub"

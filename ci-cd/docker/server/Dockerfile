@@ -3,7 +3,6 @@ FROM node:10-alpine
 LABEL maintainer="Arina.Markova@Student.Reutlingen-University.DE"
 LABEL maintainer="philipp.gerhard@student.reutlingen-university.de"
 
-ARG BUILD_OUTPUT_DIR
 ARG PROJECT_DIRECTORY
 ARG PROJECT_SRC
 
