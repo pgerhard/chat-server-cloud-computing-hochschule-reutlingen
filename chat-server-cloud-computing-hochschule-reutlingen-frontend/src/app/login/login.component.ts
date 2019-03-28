@@ -1,12 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from '@angular/router';
+import {User} from "../user";
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
-  constructor(private router:Router) {}
+
+  user: User;
+  registered: User[]=[];
+
+  constructor(private router:Router) {
+
+  }
 
   ngOnInit() {}
 
@@ -22,7 +30,11 @@ export class LoginComponent implements OnInit {
      console.log("Bitte gültige Eingabe")
    }
    else{
+     this.user = new User();
+     this.user.name=username;
+     this.registered.push(this.user);
      console.log(username);
+     console.log(this.user.name);
      this.btnClick();
    }
 
