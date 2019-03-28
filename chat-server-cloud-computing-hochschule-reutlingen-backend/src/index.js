@@ -23,6 +23,7 @@ io.on("connection", function(socket) {
   });
 });
 
-http.listen(port, function() {
-  console.log("listening on *:" + port);
+http.listen(process.env.PORT || 3000, function() {
+  const port = process.env.PORT ? process.env.PORT : 3000;
+  console.log(`listening on ${port}`);
 });
