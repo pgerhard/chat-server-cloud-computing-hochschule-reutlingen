@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
     this.router.navigateByUrl('/chatroom');
   }
 
+
+
   loginUser(e){
    e.preventDefault();
    var username = e.target.elements[0].value;
@@ -33,9 +35,11 @@ export class LoginComponent implements OnInit {
      this.user = new User();
      this.user.name=username;
      this.registered.push(this.user);
+     this.registered.unshift(this.user);
      console.log(username);
      console.log(this.user.name);
      this.btnClick();
+
    }
 
 }

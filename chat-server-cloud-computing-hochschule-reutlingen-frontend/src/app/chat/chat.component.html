@@ -23,7 +23,13 @@
       </div>
       <div class="inbox_chat scroll">
         <div class="chat_list active_chat">
+
           <div class="chat_people">
+            <ul>
+              <li *ngFor = "let user of registered; let i = index">
+                {{user.name}}
+              </li>
+            </ul>
             <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
             <div class="chat_ib">
               <h5>#phillip_gerhard <span class="chat_date">Mar 25</span></h5>
