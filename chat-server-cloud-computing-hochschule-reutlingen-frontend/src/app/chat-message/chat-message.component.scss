@@ -13,7 +13,7 @@
   color: #4c4c4c;
   font-size: 15px;
   min-height: 48px;
-  width: 35%;
+  width: 100%;
   outline: none;
 }
 
@@ -33,6 +33,12 @@
 
 .messaging {
   padding: 0 0 50px 0;
+}
+
+.mesgs {
+  float: left;
+  padding: 30px 15px 0 25px;
+  width: 70%;
 }
 
 

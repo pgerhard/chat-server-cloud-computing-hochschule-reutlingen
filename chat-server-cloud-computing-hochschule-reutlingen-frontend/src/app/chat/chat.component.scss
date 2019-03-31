@@ -10,6 +10,11 @@
   border-right: 1px solid #ddd;
 }
 
+.inbox_msg {
+  border: 1px solid #ddd;
+  clear: both;
+  overflow: hidden;
+}
 
 .top_spac {
   margin: 20px 0 0;
@@ -177,6 +182,10 @@
 .sent_msg {
   float: right;
   width: 46%;
+}
+
+.messaging {
+  padding: 0 0 50px 0;
 }
 
 

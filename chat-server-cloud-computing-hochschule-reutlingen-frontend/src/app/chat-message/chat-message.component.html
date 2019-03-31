@@ -1,18 +1,22 @@
-<div class="msg_history">
+<div class="mesgs">
+  <div class="msg_history">
+    <ul>
+      <li *ngFor="let msg of messages">
+        <div>
+          <p>{{msg.content}}</p>
+          <p>{{msg.timestamp}}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-  <ul>
-    <li *ngFor="let msg of messages">
-      <div>
-        <p>{{msg.content}}</p>
-        <p>{{msg.timestamp}}</p>
-      </div>
-    </li>
-  </ul>
-</div>
-
-<div class="type_msg">
-  <div class="input_msg_write">
-    <input type="text" class="write_msg" [(ngModel)]="message" placeholder="Type a message" />
-    <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+  <div class="type_msg">
+    <div class="input_msg_write">
+      <input type="text" class="write_msg" [(ngModel)]="message" placeholder="Type a message" />
+      <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+    </div>
   </div>
 </div>
+
+
+
