@@ -33,4 +33,8 @@ export class ChatMessageComponent implements OnInit {
     this.chatService.sendMessage(chatMessage);
     this.message = "";
   }
+
+  sendFile(){
+
+  }
 }
