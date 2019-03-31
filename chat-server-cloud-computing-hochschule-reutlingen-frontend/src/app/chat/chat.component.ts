@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../user.service";
+import {ChatMessageComponent} from "../chat-message/chat-message.component";
+import {ChatService} from "../chat.service";
 
 @Component({
   selector: "app-chat",
@@ -7,7 +9,11 @@ import { UserService } from "../user.service";
   styleUrls: ["./chat.component.scss"]
 })
 export class ChatComponent implements OnInit {
-  constructor(public userService: UserService) {}
+
+
+  constructor(public userService: UserService, public chatService: ChatService) {
+
+  }
 
   ngOnInit() {
 

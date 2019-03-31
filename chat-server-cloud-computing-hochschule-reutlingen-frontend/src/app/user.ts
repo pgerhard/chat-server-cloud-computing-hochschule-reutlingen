@@ -1,6 +1,7 @@
 export class User {
   private _name: string;
   private _date: string;
+  private _lastmsg: string;
 
   get name(): string {
     return this._name;
@@ -17,12 +18,19 @@ export class User {
   }
 
   getDate():string{
-     var  kopieDate : string[] = this.date.split(' ');
+     var  copyDate : string[] = this.date.split(' ');
 
      var dat: string= '';
 
-     dat += kopieDate[1] + ' ';
-     dat += kopieDate[2];
+     dat += copyDate[1] + ' ';
+     dat += copyDate[2];
     return dat;
+  }
+
+  get lastmsg(): string {
+    return this._lastmsg;
+  }
+  set lastmsg(lastms: string) {
+    this._lastmsg = lastms;
   }
 }
