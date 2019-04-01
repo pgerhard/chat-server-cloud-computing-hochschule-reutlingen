@@ -1,31 +1,29 @@
-import * as io from "socket.io-client";
 import { Observable } from "rxjs";
 import { ChatMessage } from "./chat-message";
-import {UserService} from "./user.service";
+import { User } from "./user";
+import { SocketioService } from "./socketio.service";
+import { Injectable } from "@angular/core";
 
+@Injectable({
+  providedIn: "root"
+})
 export class ChatService {
-  private url = "http://localhost:3000";
-
-  private socket;
   lastmsg: string;
 
-  constructor() {
-    this.socket = io(this.url);
-  }
+  constructor(private socketIo: SocketioService) {}
 
   public sendMessage(message: ChatMessage) {
-
-    this.socket.emit("new_message", message);
-    this.lastmsg=message.content;
-
+    this.socketIo.socket.emit("new_message", message);
+    this.lastmsg = message.content;
   }
 
   public getMessages(): Observable<ChatMessage> {
     return Observable.create(observer => {
-      this.socket.on("broadcast_message", msg => {
+      this.socketIo.socket.on("broadcast_message", msg => {
         const chatMessage = new ChatMessage();
         chatMessage.content = msg._content;
         chatMessage.timestamp = msg._timestamp;
+        chatMessage.type = msg._type;
 
         console.log(
           `Delivering message ${chatMessage.content} to all observers`
@@ -35,4 +33,7 @@ export class ChatService {
     });
   }
 
+  public registerNewUser(user: User) {
+    this.socketIo.socket.emit("register_user", user);
+  }
 }

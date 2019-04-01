@@ -1,26 +1,68 @@
 var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
-var port = process.env.PORT || 3000;
-var fstr  = require('fstr');
 
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
-});
+var port = process.env.PORT || 3000;
+
+const privateMessageFilterRegex = new RegExp("#([a-zA-Z]+)", "gm");
+const users = new Map();
 
 io.on("connection", function(socket) {
-  console.log("A user has connected");
-  io.emit("chat message", "A new user has connected");
+  console.log(`New Socket opened ${socket.id}`);
+  socket.emit("connection_created");
+
+  socket.on("register_user", function(user) {
+    if (users.get(user._name)) {
+      console.log(
+        `User ${user._name} already registered, new socket id ${socket.id}`
+      );
+      users.get(user._name).socketId = socket.id;
+    } else {
+      console.log(`Registering new user ${user._name}, socket id ${socket.id}`);
+
+      users.set(user._name, new User(user._name, socket.id));
+    }
+
+    io.emit("registered_users", JSON.stringify([...users.values()]));
+  });
 
   socket.on("new_message", function(msg) {
     console.log(
       `Message reads '${msg._content}', timestamp '${msg._timestamp}'`
     );
-    io.emit("broadcast_message", msg);
+    if (privateMessageFilterRegex.test(msg._content)) {
+      console.log(`Message contains an '#'. Treating as private message`);
+      msg._type = "PRIVATE";
+      privateMessageFilterRegex.exec("");
+      while (
+        (recipient = privateMessageFilterRegex.exec(msg._content)) !== null
+      ) {
+        const recipientUsername = recipient[1];
+        if (users.get(recipientUsername)) {
+          console.log(`Recipient of private message ${recipientUsername}`);
+          io.to(`${users.get(recipientUsername).socketId}`).emit(
+            "broadcast_message",
+            msg
+          );
+        } else {
+          console.log(`Unknown recipient ${recipientUsername}`);
+        }
+      }
+      io.to(`${socket.id}`).emit("broadcast_message", msg);
+    } else {
+      msg._type = "NORMAL";
+      io.emit("broadcast_message", msg);
+    }
   });
 
   socket.on("disconnect", function() {
-    console.log("A user has disconnected");
+    users.forEach(function(user, username) {
+      if (user.socketId === socket.id) {
+        console.log(`${user.name} has disconnected`);
+        users.delete(user.name);
+      }
+    });
+    io.emit("registered_users", JSON.stringify([...users.values()]));
   });
 });
 
@@ -29,42 +71,25 @@ http.listen(process.env.PORT || 3000, function() {
   console.log(`listening on ${port}`);
 });
 
-var bus = require('connect-bus');
-app.use(bus());
-app.post('/file', function(req, res){
-    //Stream
-    var fileStream;
-    //create message-object
-    var msg={ 'path':"",'fileName':"",'fileType':"","file":"","from":"","to":"","private":""};
+class User {
+  constructor(name, socketId) {
+    this._name = name;
+    this._socketId = socketId;
+  }
 
+  get name() {
+    return this._name;
+  }
 
-    req.pipe(req.bus);
-    var private=false;
-    //sent file
-    req.bus.on('file', function (fieldname, file, filename, encoding, mimetype) {
-        //create Stream
-        filestream = fstr.createWriteStream(path.resolve(__dirname+"/test/"+filename));
-        file.pipe(filestream);
-        var buffer = [];
-        file.on('data',function(data) {
-            buffer[buffer.length] = data;
-        }).on('end', function() {
-            var buf = Buffer.concat(buffer);
-            //pipe
-            res.pipe(file);
-            //fill the message
-            msg.path=file.path;
-            msg.fileName=filename;
-            msg.fileType=mimetype;
-            //file in base64 format
-            msg.file=buf.toString('base64');
+  set name(value) {
+    this._name = value;
+  }
 
-          io.sockets.emit('file', msg);
-        });
-        //close stream, send feedback to response
-        filestream.on('close', function () {
-            res.send('success!');
-        });
-    });
+  get socketId() {
+    return this._socketId;
+  }
+
+  set socketId(value) {
+    this._socketId = value;
+  }
 }
-

@@ -21,13 +21,16 @@
           </div>
         </div>
       </div>
+      <div>
+        Welcome {{retrieveUsername()}}
+      </div>
       <div class="inbox_chat scroll">
         <div class="chat_list active_chat">
           <div class="chat_people">
             <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
             <div class="chat_ib">
-              <h5>{{userService.retrieveLoggedInUser().name}}<span class="chat_date">{{userService.retrieveLoggedInUser().getDate()}}</span></h5>
-              <p>[ {{chatService.lastmsg}} ]</p>
+              <h5>{{retrieveUsername()}}<span class="chat_date">{{retrieveLatestMessageDate()}}</span></h5>
+              <p>{{retrieveLatestMessage()}}</p>
             </div>
           </div>
         </div>

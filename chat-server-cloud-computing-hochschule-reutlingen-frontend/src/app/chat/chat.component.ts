@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../user.service";
-import {ChatMessageComponent} from "../chat-message/chat-message.component";
-import {ChatService} from "../chat.service";
+import { ChatMessageComponent } from "../chat-message/chat-message.component";
+import { ChatService } from "../chat.service";
 
 @Component({
   selector: "app-chat",
@@ -9,13 +9,21 @@ import {ChatService} from "../chat.service";
   styleUrls: ["./chat.component.scss"]
 })
 export class ChatComponent implements OnInit {
+  constructor(
+    private userService: UserService,
+    public chatService: ChatService
+  ) {}
 
+  ngOnInit() {}
 
-  constructor(public userService: UserService, public chatService: ChatService) {
-
+  retrieveUsername() {
+    return this.userService.loggedInUser.name;
   }
 
-  ngOnInit() {
-
+  retrieveLatestMessage() {
+    return this.chatService.lastmsg;
+  }
+  retrieveLatestMessageDate() {
+    return this.userService.loggedInUser.getDate();
   }
 }

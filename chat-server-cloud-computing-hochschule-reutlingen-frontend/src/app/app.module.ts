@@ -17,10 +17,7 @@ import { ChatComponent } from "./chat/chat.component";
     ChatMessageComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [
-    ChatService,
-    { provide: "LOCALSTORAGE", useFactory: getLocalStorage }
-  ],
+  providers: [{ provide: "LOCALSTORAGE", useFactory: getLocalStorage }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

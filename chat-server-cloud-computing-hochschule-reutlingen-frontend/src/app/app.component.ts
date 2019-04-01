@@ -11,14 +11,12 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    if (!this.userService.retrieveLoggedInUser()) {
-      console.log(
-        `Logged in User is ${this.userService.retrieveLoggedInUser()}`
-      );
-      this.router.navigate(["login"]);
-    } else {
-      console.log(`Logged in as ${this.userService.retrieveLoggedInUser()}`);
+    if (this.userService.loggedInUser) {
+      console.log(`Logged in as ${this.userService.loggedInUser.name}`);
       this.router.navigate(["chatroom"]);
+    } else {
+      console.log(`Could not find a logged in user`);
+      this.router.navigate(["login"]);
     }
   }
 }
