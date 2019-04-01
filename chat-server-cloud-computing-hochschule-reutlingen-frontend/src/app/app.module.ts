@@ -5,11 +5,10 @@ import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { ChatService } from "./chat.service";
 import { ChatMessageComponent } from "./chat-message/chat-message.component";
 import { ChatComponent } from "./chat/chat.component";
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { ChatListComponent } from './chat-list/chat-list.component';
+import { UserDetailsComponent } from "./user-details/user-details.component";
+import { RoomsComponent } from "./chat-list/rooms.component";
 
 @NgModule({
   declarations: [
@@ -18,7 +17,7 @@ import { ChatListComponent } from './chat-list/chat-list.component';
     ChatComponent,
     ChatMessageComponent,
     UserDetailsComponent,
-    ChatListComponent
+    RoomsComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{ provide: "LOCALSTORAGE", useFactory: getLocalStorage }],

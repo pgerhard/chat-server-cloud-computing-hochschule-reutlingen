@@ -1,3 +1,6 @@
+const User = require("./user");
+const Room = require("./room");
+
 var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
@@ -5,7 +8,9 @@ var io = require("socket.io")(http);
 var port = process.env.PORT || 3000;
 
 const privateMessageFilterRegex = new RegExp("#([a-zA-Z]+)", "gm");
+const generalRoomName = "General";
 const users = new Map();
+const rooms = new Map();
 
 io.on("connection", function(socket) {
   console.log(`New Socket opened ${socket.id}`);
@@ -17,10 +22,18 @@ io.on("connection", function(socket) {
       users.get(user._name).socketId = socket.id;
     } else {
       console.log(`Registering new user ${user._name}, socket id ${socket.id}`);
-
       users.set(user._name, new User(user._name, socket.id));
     }
 
+    let general = rooms.get(generalRoomName);
+    if (!general) {
+      general = new Room(generalRoomName, new Array());
+      rooms.set(generalRoomName, general);
+    }
+    general.participants.push(users.get(user._name));
+    socket.join(generalRoomName);
+
+    io.emit("available_rooms", JSON.stringify([...rooms.values()]));
     io.emit("registered_users", JSON.stringify([...users.values()]));
   });
 
@@ -30,6 +43,16 @@ io.on("connection", function(socket) {
       console.log(`Logging out ${jsonUser._name}`);
       users.delete(jsonUser._name);
 
+      rooms.forEach((room, roomName) => {
+        for (var i = 0; i < room.participants.length; i++) {
+          if (room.participants[i].name === jsonUser._name) {
+            console.log(`Removing ${jsonUser._name} from room ${room.name}`);
+            room.participants.splice(i, 1);
+          }
+        }
+      });
+
+      io.emit("available_rooms", JSON.stringify([...rooms.values()]));
       io.emit("registered_users", JSON.stringify([...users.values()]));
     }
   });
@@ -52,7 +75,7 @@ io.on("connection", function(socket) {
       io.to(`${socket.id}`).emit("broadcast_message", msg);
     } else {
       msg._type = "NORMAL";
-      io.emit("broadcast_message", msg);
+      io.to(`${generalRoomName}`).emit("broadcast_message", msg);
     }
   });
 
@@ -71,26 +94,3 @@ http.listen(process.env.PORT || 3000, function() {
   const port = process.env.PORT ? process.env.PORT : 3000;
   console.log(`listening on ${port}`);
 });
-
-class User {
-  constructor(name, socketId) {
-    this._name = name;
-    this._socketId = socketId;
-  }
-
-  get name() {
-    return this._name;
-  }
-
-  set name(value) {
-    this._name = value;
-  }
-
-  get socketId() {
-    return this._socketId;
-  }
-
-  set socketId(value) {
-    this._socketId = value;
-  }
-}
