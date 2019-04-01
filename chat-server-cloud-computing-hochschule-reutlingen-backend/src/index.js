@@ -13,9 +13,7 @@ io.on("connection", function(socket) {
 
   socket.on("register_user", function(user) {
     if (users.get(user._name)) {
-      console.log(
-        `User ${user._name} already registered, new socket id ${socket.id}`
-      );
+      console.log(`User ${user._name} already registered, new socket id ${socket.id}`);
       users.get(user._name).socketId = socket.id;
     } else {
       console.log(`Registering new user ${user._name}, socket id ${socket.id}`);
@@ -26,24 +24,27 @@ io.on("connection", function(socket) {
     io.emit("registered_users", JSON.stringify([...users.values()]));
   });
 
+  socket.on("logout_user", function(user) {
+    const jsonUser = JSON.parse(user);
+    if (users.get(jsonUser._name)) {
+      console.log(`Logging out ${jsonUser._name}`);
+      users.delete(jsonUser._name);
+
+      io.emit("registered_users", JSON.stringify([...users.values()]));
+    }
+  });
+
   socket.on("new_message", function(msg) {
-    console.log(
-      `Message reads '${msg._content}', timestamp '${msg._timestamp}'`
-    );
+    console.log(`Message reads '${msg._content}', timestamp '${msg._timestamp}'`);
     if (privateMessageFilterRegex.test(msg._content)) {
       console.log(`Message contains an '#'. Treating as private message`);
       msg._type = "PRIVATE";
       privateMessageFilterRegex.exec("");
-      while (
-        (recipient = privateMessageFilterRegex.exec(msg._content)) !== null
-      ) {
+      while ((recipient = privateMessageFilterRegex.exec(msg._content)) !== null) {
         const recipientUsername = recipient[1];
         if (users.get(recipientUsername)) {
           console.log(`Recipient of private message ${recipientUsername}`);
-          io.to(`${users.get(recipientUsername).socketId}`).emit(
-            "broadcast_message",
-            msg
-          );
+          io.to(`${users.get(recipientUsername).socketId}`).emit("broadcast_message", msg);
         } else {
           console.log(`Unknown recipient ${recipientUsername}`);
         }

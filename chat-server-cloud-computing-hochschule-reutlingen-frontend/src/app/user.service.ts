@@ -41,6 +41,7 @@ export class UserService {
       console.log(`Logging out user ${this.loggedInUser.name}`);
       this.localStorage.removeItem("loggedInUser");
       this.socketIo.socket.emit("logout_user", JSON.stringify(this.loggedInUser));
+      this._loggedInUser = null;
       this.router.navigate([""]);
     }
   }
