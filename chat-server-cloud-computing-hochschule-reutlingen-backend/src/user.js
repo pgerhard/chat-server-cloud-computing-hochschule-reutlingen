@@ -1,4 +1,5 @@
 class User {
+
   constructor(name, socketId) {
     this._name = name;
     this._socketId = socketId;

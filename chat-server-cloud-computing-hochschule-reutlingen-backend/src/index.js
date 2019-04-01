@@ -16,13 +16,15 @@ io.on("connection", function(socket) {
   console.log(`New Socket opened ${socket.id}`);
   socket.emit("connection_created");
 
-  socket.on("register_user", function(user) {
-    if (users.get(user._name)) {
-      console.log(`User ${user._name} already registered, new socket id ${socket.id}`);
-      users.get(user._name).socketId = socket.id;
+  socket.on("register_user", function(jsonUser) {
+    const user = userFromJson(jsonUser);
+
+    if (users.get(user.name)) {
+      console.log(`User ${user.name} already registered, new socket id ${socket.id}`);
+      users.get(user.name).socketId = socket.id;
     } else {
-      console.log(`Registering new user ${user._name}, socket id ${socket.id}`);
-      users.set(user._name, new User(user._name, socket.id));
+      console.log(`Registering new user ${user.name}, socket id ${socket.id}`);
+      users.set(user.name, new User(user.name, socket.id));
     }
 
     let general = rooms.get(generalRoomName);
@@ -37,16 +39,16 @@ io.on("connection", function(socket) {
     io.emit("registered_users", JSON.stringify([...users.values()]));
   });
 
-  socket.on("logout_user", function(user) {
-    const jsonUser = JSON.parse(user);
-    if (users.get(jsonUser._name)) {
-      console.log(`Logging out ${jsonUser._name}`);
-      users.delete(jsonUser._name);
+  socket.on("logout_user", function(jsonUser) {
+    const user = userFromJson(jsonUser);
+    if (users.get(user.name)) {
+      console.log(`Logging out ${user.name}`);
+      users.delete(user.name);
 
       rooms.forEach((room, roomName) => {
         for (var i = 0; i < room.participants.length; i++) {
-          if (room.participants[i].name === jsonUser._name) {
-            console.log(`Removing ${jsonUser._name} from room ${room.name}`);
+          if (room.participants[i].name === user.name) {
+            console.log(`Removing ${user.name} from room ${room.name}`);
             room.participants.splice(i, 1);
           }
         }
@@ -79,18 +81,29 @@ io.on("connection", function(socket) {
     }
   });
 
-  socket.on("disconnect", function() {
-    users.forEach(function(user, username) {
-      if (user.socketId === socket.id) {
-        console.log(`${user.name} has disconnected`);
-        users.delete(user.name);
-      }
-    });
-    io.emit("registered_users", JSON.stringify([...users.values()]));
-  });
+  socket.on("disconnect", () => handleDisconnect(socket));
 });
 
 http.listen(process.env.PORT || 3000, function() {
   const port = process.env.PORT ? process.env.PORT : 3000;
   console.log(`listening on ${port}`);
 });
+
+/**
+ * Handle the disconnect event emitted by Socket.IO
+ * @param socket the socket that has disconnected
+ */
+function handleDisconnect(socket) {
+  users.forEach(function(user, username) {
+    if (user.socketId === socket.id) {
+      console.log(`${user.name} has disconnected`);
+      users.delete(user.name);
+    }
+  });
+  io.emit("registered_users", JSON.stringify([...users.values()]));
+}
+
+function userFromJson(jsonUser) {
+  let user = Object.create(User.prototype);
+  return Object.assign(user, jsonUser);
+}
