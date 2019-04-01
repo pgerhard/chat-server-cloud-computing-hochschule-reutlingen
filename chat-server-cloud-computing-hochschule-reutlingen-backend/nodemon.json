@@ -1,0 +1,4 @@
+{
+  "watch": ["src"],
+  "exec": "node $NODE_DEBUG_OPTION src/index.js"
+}
