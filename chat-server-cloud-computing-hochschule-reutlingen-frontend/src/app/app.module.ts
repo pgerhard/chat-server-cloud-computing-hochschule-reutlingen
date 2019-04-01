@@ -8,13 +8,17 @@ import { HttpClientModule } from "@angular/common/http";
 import { ChatService } from "./chat.service";
 import { ChatMessageComponent } from "./chat-message/chat-message.component";
 import { ChatComponent } from "./chat/chat.component";
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ChatComponent,
-    ChatMessageComponent
+    ChatMessageComponent,
+    UserDetailsComponent,
+    ChatListComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{ provide: "LOCALSTORAGE", useFactory: getLocalStorage }],

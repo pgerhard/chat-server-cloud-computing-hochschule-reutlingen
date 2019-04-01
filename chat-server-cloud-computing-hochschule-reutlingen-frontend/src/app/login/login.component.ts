@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     } else {
       const user = new User();
       user.name = username;
-      this.userService.logInUser(user);
+      this.userService.login(user);
       this.btnClick();
     }
   }
