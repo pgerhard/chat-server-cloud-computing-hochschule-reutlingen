@@ -7,6 +7,8 @@ import { Router } from "@angular/router";
   providedIn: "root"
 })
 export class UserService {
+  private loggedInUserKey: string = "loggedInUser";
+
   private _loggedInUser: User;
 
   constructor(
@@ -32,15 +34,15 @@ export class UserService {
   }
 
   login(user: User) {
-    this.localStorage.setItem("loggedInUser", JSON.stringify(user));
+    this.localStorage.setItem(this.loggedInUserKey, JSON.stringify(user));
     this.socketIo.socket.emit("register_user", user);
   }
 
   logout() {
     if (this.loggedInUser) {
       console.log(`Logging out user ${this.loggedInUser.name}`);
-      this.localStorage.removeItem("loggedInUser");
-      this.socketIo.socket.emit("logout_user", JSON.stringify(this.loggedInUser));
+      this.localStorage.removeItem(this.loggedInUserKey);
+      this.socketIo.socket.emit("logout_user", this.loggedInUser);
       this._loggedInUser = null;
       this.router.navigate([""]);
     }
@@ -55,7 +57,7 @@ export class UserService {
   }
 
   private retrieveLoggedInUserFromLocalStorage(): User {
-    let jsonUser = JSON.parse(this.localStorage.getItem("loggedInUser"));
+    let jsonUser = JSON.parse(this.localStorage.getItem(this.loggedInUserKey));
     if (jsonUser) {
       const user = new User();
       user.name = jsonUser._name;
