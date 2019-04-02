@@ -1,11 +1,12 @@
 import { Observable } from "rxjs";
 import { ChatMessage } from "./chat-message";
-import { User } from "./user";
 import { SocketioService } from "./socketio.service";
 import { Injectable } from "@angular/core";
 import { Room } from "./room";
 import { MessageType } from "./message-type";
 import { UserService } from "./user.service";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -17,7 +18,7 @@ export class ChatService {
 
   private privateMessageFilterRegex = new RegExp("#([a-zA-Z]+)", "gm");
 
-  constructor(private socketIo: SocketioService, private userService: UserService) {
+  constructor(private socketIo: SocketioService, private userService: UserService, private httpClient: HttpClient) {
     let parent = this;
     this.socketIo.socket.on("available_rooms", msg => {
       const jsonRooms = JSON.parse(msg);
@@ -62,6 +63,8 @@ export class ChatService {
         chatMessage.timestamp = msg._timestamp;
         chatMessage.type = MessageType.parseMessageType(msg._type);
         chatMessage.recipients = msg._recipients;
+        chatMessage.fileLocation = msg._fileLocation;
+        chatMessage.fileName = msg._fileName;
 
         console.log(`Delivering message ${chatMessage.content} to all observers`);
         console.log(chatMessage);
@@ -79,5 +82,14 @@ export class ChatService {
     message.recipients = this.userService.loggedInUsers();
     console.log(message);
     this.socketIo.socket.emit("new_message", message);
+  }
+
+  sendFile(fileToUpload: File) {
+    const endpoint = "http://localhost:3000/upload-file";
+    const formData: FormData = new FormData();
+    formData.append("fileKey", fileToUpload, fileToUpload.name);
+    return this.httpClient
+      .post(endpoint, formData, { observe: "response", headers: new HttpHeaders({}), responseType: "text" })
+      .pipe(map((value: HttpResponse<Object>) => value.headers.get("Location")));
   }
 }

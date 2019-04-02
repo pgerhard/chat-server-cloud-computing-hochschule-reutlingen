@@ -10,6 +10,8 @@ import { ChatService } from "../chat.service";
 export class ChatMessageComponent implements OnInit {
   messages: ChatMessage[] = [];
 
+  fileToUpload: File = null;
+
   @Input()
   message: string;
 
@@ -27,10 +29,30 @@ export class ChatMessageComponent implements OnInit {
     chatMessage.content = this.message;
     chatMessage.timestamp = new Date();
 
+    if (this.fileToUpload) {
+      console.log(`Detected file upload. Sending file`);
+      chatMessage.fileName = this.fileToUpload.name;
+      this.chatService.sendFile(this.fileToUpload).subscribe(location => {
+        console.log(`${location}`);
+        chatMessage.fileLocation = location;
+        this.doSendMessage(chatMessage);
+        this.fileToUpload = null;
+      });
+    } else {
+      this.doSendMessage(chatMessage);
+    }
+  }
+
+  private doSendMessage(chatMessage) {
     console.log(`Sending message '${chatMessage.content}' at ${chatMessage.timestamp}`);
     this.chatService.sendMessage(chatMessage);
     this.message = "";
   }
 
-  sendFile() {}
+  handleFileInput(files: any) {
+    this.fileToUpload = files.item(0);
+    if (this.fileToUpload) {
+      console.log(`Uploaded file ${this.fileToUpload.name}, size ${this.fileToUpload.size}`);
+    }
+  }
 }

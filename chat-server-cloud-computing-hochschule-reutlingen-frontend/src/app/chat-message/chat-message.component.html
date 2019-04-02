@@ -18,6 +18,9 @@
             </ul>
           </div>
         </div>
+        <div>
+          <a href="{{msg.fileLocation}}" download>{{msg.fileName}}</a>
+        </div>
       </li>
     </ul>
   </div>
@@ -26,6 +29,7 @@
   <div class="type_msg">
     <div class="input_msg_write">
       <input type="text" class="write_msg" [(ngModel)]="message" (keydown.enter)="sendMessage()" placeholder="Type a message" />
+      <input type="file" (change)="handleFileInput($event.target.files)" placeholder="Select file to upload"/>
       <button class="msg_send_btn" type="button" (click)="sendMessage()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
     </div>
   </div>

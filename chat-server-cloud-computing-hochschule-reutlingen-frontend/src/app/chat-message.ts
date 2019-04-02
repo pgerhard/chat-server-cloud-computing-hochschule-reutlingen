@@ -7,6 +7,8 @@ export class ChatMessage {
   private _recipients: User[] = [];
   private _type: MessageType;
   private _timestamp: Date;
+  private _fileLocation: string;
+  private _fileName: string;
 
   get sender(): User {
     return this._sender;
@@ -48,7 +50,19 @@ export class ChatMessage {
     this._timestamp = value;
   }
 
-  getContent() {
-    return this._content;
+  get fileLocation(): string {
+    return this._fileLocation;
+  }
+
+  set fileLocation(value: string) {
+    this._fileLocation = value;
+  }
+
+  get fileName(): string {
+    return this._fileName;
+  }
+
+  set fileName(value: string) {
+    this._fileName = value;
   }
 }
