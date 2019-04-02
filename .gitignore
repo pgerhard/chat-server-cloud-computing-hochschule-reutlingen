@@ -62,3 +62,4 @@ typings/
 .idea
 .gitignore
 chat-server-cloud-computing-hochschule-reutlingen-backend/dist
+chat-server-cloud-computing-hochschule-reutlingen-backend/standalone

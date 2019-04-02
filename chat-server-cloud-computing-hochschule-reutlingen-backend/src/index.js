@@ -11,9 +11,6 @@ var path = require("path");
 var formidable = require("formidable");
 var fs = require("fs");
 
-var port = process.env.PORT || 3000;
-
-const privateMessageFilterRegex = new RegExp("#([a-zA-Z]+)", "gm");
 const generalRoomName = "General";
 const users = new Map();
 const rooms = new Map();
@@ -47,9 +44,9 @@ app.get("/uploads/*", function(req, res) {
 app.get("*", function(req, res) {
   if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
     console.log(`${req.url}`);
-    res.sendFile(path.resolve(`${__dirname}/dist/chat-server-cloud-computing-hochschule-reutlingen-frontend/${req.url}`));
+    res.sendFile(path.resolve(`${__dirname}/dist/${req.url}`));
   } else {
-    res.sendFile(path.resolve(`${__dirname}/dist/chat-server-cloud-computing-hochschule-reutlingen-frontend/index.html`));
+    res.sendFile(path.resolve(`${__dirname}/dist/index.html`));
   }
 });
 

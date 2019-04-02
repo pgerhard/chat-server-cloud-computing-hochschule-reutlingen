@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { ChatMessage } from "../chat-message";
 import { ChatService } from "../chat.service";
 
@@ -14,6 +14,9 @@ export class ChatMessageComponent implements OnInit {
 
   @Input()
   message: string;
+
+  @ViewChild("fileInput")
+  fileInput: ElementRef;
 
   constructor(private chatService: ChatService) {}
 
@@ -37,6 +40,7 @@ export class ChatMessageComponent implements OnInit {
         chatMessage.fileLocation = location;
         this.doSendMessage(chatMessage);
         this.fileToUpload = null;
+        this.fileInput.nativeElement.value = "";
       });
     } else {
       this.doSendMessage(chatMessage);
