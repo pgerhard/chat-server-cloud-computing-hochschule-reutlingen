@@ -2,6 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "./user.service";
 import { Router } from "@angular/router";
 
+/**
+ *
+ * TODO Generate marked message when user joins chat room
+ * TODO Display list of logged in users
+ * TODO Room for private message
+ *
+ * TODO Users can send files
+ */
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",

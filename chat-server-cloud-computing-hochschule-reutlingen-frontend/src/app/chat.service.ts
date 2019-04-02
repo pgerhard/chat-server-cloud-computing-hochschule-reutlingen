@@ -38,6 +38,7 @@ export class ChatService {
         chatMessage.content = msg._content;
         chatMessage.timestamp = msg._timestamp;
         chatMessage.type = msg._type;
+        chatMessage.recipients = msg._recipients;
 
         console.log(`Delivering message ${chatMessage.content} to all observers`);
         observer.next(chatMessage);

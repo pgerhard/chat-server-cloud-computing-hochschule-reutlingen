@@ -65,18 +65,31 @@ io.on("connection", function(socket) {
       console.log(`Message contains an '#'. Treating as private message`);
       msg._type = "PRIVATE";
       privateMessageFilterRegex.exec("");
+      let recipients = [];
       while ((recipient = privateMessageFilterRegex.exec(msg._content)) !== null) {
-        const recipientUsername = recipient[1];
-        if (users.get(recipientUsername)) {
-          console.log(`Recipient of private message ${recipientUsername}`);
-          io.to(`${users.get(recipientUsername).socketId}`).emit("broadcast_message", msg);
-        } else {
-          console.log(`Unknown recipient ${recipientUsername}`);
-        }
+        recipients.push(recipient[1]);
       }
+
+      msg._recipients = recipients;
+
+      recipients.forEach(function(recipient) {
+        if (users.get(recipient)) {
+          console.log(`Recipient of private message ${recipient}`);
+          let socketId = users.get(recipient).socketId;
+          if (socketId === socket.id) {
+            console.log(`Recipient is sender. Skipping`);
+          } else {
+            io.to(`${socketId}`).emit("broadcast_message", msg);
+          }
+        } else {
+          console.log(`Unknown recipient ${recipient}`);
+        }
+      });
+
       io.to(`${socket.id}`).emit("broadcast_message", msg);
     } else {
       msg._type = "NORMAL";
+      msg._recipients = ["Everyone"];
       io.to(`${generalRoomName}`).emit("broadcast_message", msg);
     }
   });
@@ -93,7 +106,7 @@ http.listen(process.env.PORT || 3000, function() {
  * Handle the disconnect event emitted by Socket.IO
  * @param socket the socket that has disconnected
  */
-function handleDisconnect(socket) {
+async function handleDisconnect(socket) {
   users.forEach(function(user, username) {
     if (user.socketId === socket.id) {
       console.log(`${user.name} has disconnected`);
