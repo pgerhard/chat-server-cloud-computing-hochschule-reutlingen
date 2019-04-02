@@ -5,9 +5,18 @@
         <div>
           <p>{{msg.content}}</p>
           <p>{{msg.timestamp}}</p>
-          <p>{{msg.type}}</p>
+          <p>{{msg.type.toString()}}</p>
           <p>From: {{msg.sender}}</p>
-          <p>To: {{msg.recipients}}</p>
+          <div>
+            <p>
+              To:
+            </p>
+            <ul>
+              <li *ngFor="let recipient of msg.recipients">
+                <p>{{recipient["_name"]}}</p>
+              </li>
+            </ul>
+          </div>
         </div>
       </li>
     </ul>

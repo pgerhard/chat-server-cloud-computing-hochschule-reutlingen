@@ -1,6 +1,7 @@
 class Room {
   constructor(name, participants) {
     this._name = name;
+    this._messages = [];
     this._participants = participants;
   }
 
@@ -18,6 +19,14 @@ class Room {
 
   set participants(value) {
     this._participants = value;
+  }
+
+  get messages() {
+    return this._messages;
+  }
+
+  addMessage(msg) {
+    this._messages.push(msg);
   }
 }
 

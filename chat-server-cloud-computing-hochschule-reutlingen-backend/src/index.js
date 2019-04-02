@@ -35,7 +35,7 @@ io.on("connection", function(socket) {
     general.participants.push(users.get(user._name));
     socket.join(generalRoomName);
 
-    sendWelcomeMessage(generalRoomName, user);
+    sendWelcomeMessage(general, user);
 
     io.emit("available_rooms", JSON.stringify([...rooms.values()]));
     io.emit("registered_users", JSON.stringify([...users.values()]));
@@ -52,7 +52,7 @@ io.on("connection", function(socket) {
           if (room.participants[i].name === user.name) {
             console.log(`Removing ${user.name} from room ${room.name}`);
             room.participants.splice(i, 1);
-            sendGoodbyeMessage(roomName, user);
+            sendGoodbyeMessage(room, user);
           }
         }
       });
@@ -64,16 +64,8 @@ io.on("connection", function(socket) {
 
   socket.on("new_message", function(msg) {
     console.log(`Message reads '${msg._content}', timestamp '${msg._timestamp}'`);
-    if (privateMessageFilterRegex.test(msg._content)) {
-      console.log(`Message contains an '#'. Treating as private message`);
-      msg._type = "PRIVATE";
-      privateMessageFilterRegex.exec("");
-      let recipients = [];
-      while ((recipient = privateMessageFilterRegex.exec(msg._content)) !== null) {
-        recipients.push(recipient[1]);
-      }
-
-      msg._recipients = recipients;
+    if (msg._type === "PRIVATE") {
+      console.log(`Message type private`);
 
       recipients.forEach(function(recipient) {
         if (users.get(recipient)) {
@@ -91,9 +83,8 @@ io.on("connection", function(socket) {
 
       io.to(`${socket.id}`).emit("broadcast_message", msg);
     } else {
-      msg._type = "NORMAL";
-      msg._recipients = ["Everyone"];
-      sendMessageToRoom(generalRoomName, msg);
+      console.log(`Message type private`);
+      sendMessageToRoom(rooms.get(generalRoomName), msg);
     }
   });
 
@@ -121,43 +112,42 @@ async function handleDisconnect(socket) {
 
 /**
  * Send the welcome message to the specified room.
- * @param roomName to send welcome message to
+ * @param room to send welcome message to
  * @param user that has joined the room
  */
-function sendWelcomeMessage(roomName, user) {
+function sendWelcomeMessage(room, user) {
   let msg = {
     _sender: user,
-    _content: `${user.name} has joined the room ${roomName}`,
-    _recipients: "Everyone",
+    _content: `${user.name} has joined the room ${room.name}`,
     _type: "WELCOME",
     _timestamp: new Date()
   };
-  sendMessageToRoom(roomName, msg);
+  sendMessageToRoom(room, msg);
 }
 
 /**
  * Send the goodbye message to the specified room
- * @param roomName to send the goodybe message to
+ * @param room to send the goodybe message to
  * @param user that has left the room
  */
-function sendGoodbyeMessage(roomName, user) {
+function sendGoodbyeMessage(room, user) {
   let msg = {
     _sender: user,
-    _content: `${user.name} has left the room ${roomName}`,
-    _recipients: "Everyone",
+    _content: `${user.name} has left the room ${room.name}`,
     _type: "WELCOME",
     _timestamp: new Date()
   };
-  sendMessageToRoom(roomName, msg);
+  sendMessageToRoom(room, msg);
 }
 
 /**
  * Send a given message to a room
- * @param roomName to send the message to
+ * @param room to send the message to
  * @param msg to send
  */
-function sendMessageToRoom(roomName, msg) {
-  io.to(`${roomName}`).emit("broadcast_message", msg);
+function sendMessageToRoom(room, msg) {
+  room.addMessage(msg);
+  io.to(`${room.name}`).emit("broadcast_message", msg);
 }
 
 /**

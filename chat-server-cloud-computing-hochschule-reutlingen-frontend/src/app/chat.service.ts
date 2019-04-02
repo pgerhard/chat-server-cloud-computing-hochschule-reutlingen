@@ -4,6 +4,8 @@ import { User } from "./user";
 import { SocketioService } from "./socketio.service";
 import { Injectable } from "@angular/core";
 import { Room } from "./room";
+import { MessageType } from "./message-type";
+import { UserService } from "./user.service";
 
 @Injectable({
   providedIn: "root"
@@ -13,7 +15,9 @@ export class ChatService {
 
   rooms: Room[] = [];
 
-  constructor(private socketIo: SocketioService) {
+  private privateMessageFilterRegex = new RegExp("#([a-zA-Z]+)", "gm");
+
+  constructor(private socketIo: SocketioService, private userService: UserService) {
     let parent = this;
     this.socketIo.socket.on("available_rooms", msg => {
       const jsonRooms = JSON.parse(msg);
@@ -27,7 +31,19 @@ export class ChatService {
   }
 
   public sendMessage(message: ChatMessage) {
-    this.socketIo.socket.emit("new_message", message);
+    if (this.privateMessageFilterRegex.test(message.content)) {
+      console.log(`Message contains an '#'. Treating as private message`);
+      message.type = MessageType.PRIVATE;
+
+      let recipient;
+      this.privateMessageFilterRegex.exec("");
+      while ((recipient = this.privateMessageFilterRegex.exec(message.content)) !== null) {
+        message.recipients.push(this.userService.findUserByName(recipient[1]));
+      }
+      this.socketIo.socket.emit("new_message", message);
+    } else {
+      this.sendBroadcastMessage(message);
+    }
     this.lastmsg = message.content;
   }
 
@@ -37,10 +53,11 @@ export class ChatService {
         const chatMessage = new ChatMessage();
         chatMessage.content = msg._content;
         chatMessage.timestamp = msg._timestamp;
-        chatMessage.type = msg._type;
+        chatMessage.type = MessageType.parseMessageType(msg._type);
         chatMessage.recipients = msg._recipients;
 
         console.log(`Delivering message ${chatMessage.content} to all observers`);
+        console.log(chatMessage);
         observer.next(chatMessage);
       });
     });
@@ -52,5 +69,12 @@ export class ChatService {
 
   public getRooms(): Room[] {
     return this.rooms;
+  }
+
+  private sendBroadcastMessage(message: ChatMessage) {
+    message.type = MessageType.NORMAL;
+    message.recipients = this.userService.loggedInUsers();
+    console.log(message);
+    this.socketIo.socket.emit("new_message", message);
   }
 }

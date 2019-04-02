@@ -13,18 +13,12 @@ export class UserService {
 
   private _loggedInUsers: User[] = [];
 
-  constructor(
-    @Inject("LOCALSTORAGE") private localStorage: any,
-    private socketIo: SocketioService,
-    private router: Router
-  ) {
+  constructor(@Inject("LOCALSTORAGE") private localStorage: any, private socketIo: SocketioService, private router: Router) {
     this.socketIo.socket.on("connection_created", () => {
       console.log(`Created new connection to server`);
 
       if (this.loggedInUser) {
-        console.log(
-          `User ${this.loggedInUser.name} is logged into the client. Automatically creating connection on server`
-        );
+        console.log(`User ${this.loggedInUser.name} is logged into the client. Automatically creating connection on server`);
         this.socketIo.socket.emit("register_user", this.loggedInUser);
       }
     });
@@ -78,5 +72,9 @@ export class UserService {
     } else {
       return null;
     }
+  }
+
+  findUserByName(userName: string): User {
+    return this._loggedInUsers.filter(user => user.name === userName)[0];
   }
 }

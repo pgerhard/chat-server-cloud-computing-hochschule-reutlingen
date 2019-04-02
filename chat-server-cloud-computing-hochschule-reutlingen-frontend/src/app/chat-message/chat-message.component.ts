@@ -17,7 +17,7 @@ export class ChatMessageComponent implements OnInit {
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((message: ChatMessage) => {
-      console.log(`Received new message ${message["_content"]}`);
+      console.log(`Received new message ${message.content}`);
       this.messages.push(message);
     });
   }
@@ -27,9 +27,7 @@ export class ChatMessageComponent implements OnInit {
     chatMessage.content = this.message;
     chatMessage.timestamp = new Date();
 
-    console.log(
-      `Sending message '${chatMessage.content}' at ${chatMessage.timestamp}`
-    );
+    console.log(`Sending message '${chatMessage.content}' at ${chatMessage.timestamp}`);
     this.chatService.sendMessage(chatMessage);
     this.message = "";
   }
