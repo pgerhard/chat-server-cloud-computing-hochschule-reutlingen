@@ -25,6 +25,7 @@ export class ChatService {
       jsonRooms.forEach(function(jsonRoom) {
         let room: Room = new Room();
         room.name = jsonRoom._name;
+        room.identifier = jsonRoom._identifier;
         parent.rooms.push(room);
       });
     });
@@ -34,11 +35,17 @@ export class ChatService {
     if (this.privateMessageFilterRegex.test(message.content)) {
       console.log(`Message contains an '#'. Treating as private message`);
       message.type = MessageType.PRIVATE;
+      message.sender = this.userService.findUserByName(this.userService.loggedInUser.name);
+      message.recipients.push(message.sender);
 
       let recipient;
       this.privateMessageFilterRegex.exec("");
       while ((recipient = this.privateMessageFilterRegex.exec(message.content)) !== null) {
-        message.recipients.push(this.userService.findUserByName(recipient[1]));
+        if (recipient[1] === this.userService.loggedInUser.name) {
+          console.log(`Sender as recipient. Skipping`);
+        } else {
+          message.recipients.push(this.userService.findUserByName(recipient[1]));
+        }
       }
       this.socketIo.socket.emit("new_message", message);
     } else {
@@ -61,10 +68,6 @@ export class ChatService {
         observer.next(chatMessage);
       });
     });
-  }
-
-  public registerNewUser(user: User) {
-    this.socketIo.socket.emit("register_user", user);
   }
 
   public getRooms(): Room[] {

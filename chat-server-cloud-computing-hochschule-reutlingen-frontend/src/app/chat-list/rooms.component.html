@@ -1,8 +1,9 @@
 <div class="msg_history">
+  <h5>Room List</h5>
   <ul>
     <li *ngFor="let room of retrieveRooms()">
       <div>
-        <p>{{room.name}}</p>
+        <p>{{room.name}} <{{room.identifier}}></p>
       </div>
     </li>
   </ul>

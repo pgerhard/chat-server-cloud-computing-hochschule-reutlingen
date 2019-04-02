@@ -1,5 +1,6 @@
 class Room {
-  constructor(name, participants) {
+  constructor(identifier, name, participants) {
+    this._identifier = identifier;
     this._name = name;
     this._messages = [];
     this._participants = participants;

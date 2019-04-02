@@ -31,7 +31,6 @@ export class UserService {
         let user = Object.create(User.prototype);
         parent._loggedInUsers.push(Object.assign(user, jsonUser));
       });
-      console.log(this._loggedInUsers);
     });
   }
 

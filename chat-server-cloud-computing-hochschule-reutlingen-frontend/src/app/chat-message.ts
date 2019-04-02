@@ -4,7 +4,7 @@ import { MessageType } from "./message-type";
 export class ChatMessage {
   private _sender: User;
   private _content: string;
-  private _recipients: User[];
+  private _recipients: User[] = [];
   private _type: MessageType;
   private _timestamp: Date;
 

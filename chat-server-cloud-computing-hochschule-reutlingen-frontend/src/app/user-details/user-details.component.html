@@ -4,6 +4,7 @@
   Username: {{retrieveUsername()}}
   <button class="msg_send_btn" type="button" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
 </div>
+<h5>Logged in Users</h5>
 <div>
   <ul>
     <li *ngFor="let user of loggedInUsers()">
