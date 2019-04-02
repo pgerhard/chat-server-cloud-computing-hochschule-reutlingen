@@ -160,6 +160,11 @@ function sendMessageToRoom(roomName, msg) {
   io.to(`${roomName}`).emit("broadcast_message", msg);
 }
 
+/**
+ * Assign the properties of an object to a instance of the class user
+ * @param jsonUser from which to assign properties
+ * @returns an object of class user
+ */
 function userFromJson(jsonUser) {
   let user = Object.create(User.prototype);
   return Object.assign(user, jsonUser);

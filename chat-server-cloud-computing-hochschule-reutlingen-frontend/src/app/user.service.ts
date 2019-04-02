@@ -11,6 +11,8 @@ export class UserService {
 
   private _loggedInUser: User;
 
+  private _loggedInUsers: User[] = [];
+
   constructor(
     @Inject("LOCALSTORAGE") private localStorage: any,
     private socketIo: SocketioService,
@@ -28,8 +30,14 @@ export class UserService {
     });
 
     this.socketIo.socket.on("registered_users", msg => {
+      let parent = this;
+      this._loggedInUsers = [];
       const jsonUsers = JSON.parse(msg);
-      console.log(msg);
+      jsonUsers.forEach(function(jsonUser) {
+        let user = Object.create(User.prototype);
+        parent._loggedInUsers.push(Object.assign(user, jsonUser));
+      });
+      console.log(this._loggedInUsers);
     });
   }
 
@@ -46,6 +54,10 @@ export class UserService {
       this._loggedInUser = null;
       this.router.navigate([""]);
     }
+  }
+
+  loggedInUsers(): User[] {
+    return this._loggedInUsers;
   }
 
   get loggedInUser(): User {

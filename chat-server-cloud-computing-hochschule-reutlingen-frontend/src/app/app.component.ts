@@ -3,9 +3,6 @@ import { UserService } from "./user.service";
 import { Router } from "@angular/router";
 
 /**
- *
- *
- * TODO Display list of logged in users
  * TODO Room for private message
  *
  * TODO Users can send files
