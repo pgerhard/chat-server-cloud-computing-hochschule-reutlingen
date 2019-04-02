@@ -35,6 +35,8 @@ io.on("connection", function(socket) {
     general.participants.push(users.get(user._name));
     socket.join(generalRoomName);
 
+    sendWelcomeMessage(generalRoomName, user);
+
     io.emit("available_rooms", JSON.stringify([...rooms.values()]));
     io.emit("registered_users", JSON.stringify([...users.values()]));
   });
@@ -50,6 +52,7 @@ io.on("connection", function(socket) {
           if (room.participants[i].name === user.name) {
             console.log(`Removing ${user.name} from room ${room.name}`);
             room.participants.splice(i, 1);
+            sendGoodbyeMessage(roomName, user);
           }
         }
       });
@@ -90,7 +93,7 @@ io.on("connection", function(socket) {
     } else {
       msg._type = "NORMAL";
       msg._recipients = ["Everyone"];
-      io.to(`${generalRoomName}`).emit("broadcast_message", msg);
+      sendMessageToRoom(generalRoomName, msg);
     }
   });
 
@@ -114,6 +117,47 @@ async function handleDisconnect(socket) {
     }
   });
   io.emit("registered_users", JSON.stringify([...users.values()]));
+}
+
+/**
+ * Send the welcome message to the specified room.
+ * @param roomName to send welcome message to
+ * @param user that has joined the room
+ */
+function sendWelcomeMessage(roomName, user) {
+  let msg = {
+    _sender: user,
+    _content: `${user.name} has joined the room ${roomName}`,
+    _recipients: "Everyone",
+    _type: "WELCOME",
+    _timestamp: new Date()
+  };
+  sendMessageToRoom(roomName, msg);
+}
+
+/**
+ * Send the goodbye message to the specified room
+ * @param roomName to send the goodybe message to
+ * @param user that has left the room
+ */
+function sendGoodbyeMessage(roomName, user) {
+  let msg = {
+    _sender: user,
+    _content: `${user.name} has left the room ${roomName}`,
+    _recipients: "Everyone",
+    _type: "WELCOME",
+    _timestamp: new Date()
+  };
+  sendMessageToRoom(roomName, msg);
+}
+
+/**
+ * Send a given message to a room
+ * @param roomName to send the message to
+ * @param msg to send
+ */
+function sendMessageToRoom(roomName, msg) {
+  io.to(`${roomName}`).emit("broadcast_message", msg);
 }
 
 function userFromJson(jsonUser) {

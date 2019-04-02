@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 
 /**
  *
- * TODO Generate marked message when user joins chat room
+ *
  * TODO Display list of logged in users
  * TODO Room for private message
  *
