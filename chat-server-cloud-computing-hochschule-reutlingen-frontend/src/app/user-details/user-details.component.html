@@ -9,8 +9,8 @@
   <div class="chat_people">
     <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
     <div class="chat_ib">
-      <h5>{{retrieveUsername()}}<span class="chat_date">{{userService.loggedInUser.getDate()}}</span></h5>
-      <p>{{chatService.lastmsg}}</p>
+      <h5>{{retrieveUsername()}}<span class="chat_date">{{retrieveUserLogInDate()}}</span></h5>
+      <p>{{retrieveLastMessage()}}</p>
 
     </div>
   </div>

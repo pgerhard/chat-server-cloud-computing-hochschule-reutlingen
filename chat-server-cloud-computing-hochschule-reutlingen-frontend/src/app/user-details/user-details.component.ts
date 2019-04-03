@@ -9,7 +9,7 @@ import {ChatService} from "../chat.service";
   styleUrls: ["./user-details.component.scss"]
 })
 export class UserDetailsComponent implements OnInit {
-  constructor(private userService: UserService,private chatService: ChatService) {}
+  constructor(private userService: UserService, private chatService: ChatService) {}
 
   ngOnInit() {}
 
@@ -23,5 +23,13 @@ export class UserDetailsComponent implements OnInit {
 
   logout() {
     this.userService.logout();
+  }
+
+  retrieveLastMessage (){
+    return this.chatService.lastmsg
+  }
+
+  retrieveUserLogInDate(){
+    return this.userService.loggedInUser.date;
   }
 }
