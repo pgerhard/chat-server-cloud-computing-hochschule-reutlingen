@@ -33,10 +33,11 @@ export class ChatService {
   }
 
   public sendMessage(message: ChatMessage) {
+    message.sender = this.userService.findUserByName(this.userService.loggedInUser.name);
+
     if (this.privateMessageFilterRegex.test(message.content)) {
       console.log(`Message contains an '#'. Treating as private message`);
       message.type = MessageType.PRIVATE;
-      message.sender = this.userService.findUserByName(this.userService.loggedInUser.name);
       message.recipients.push(message.sender);
 
       let recipient;
@@ -50,6 +51,7 @@ export class ChatService {
       }
       this.socketIo.socket.emit("new_message", message);
     } else {
+      message.type = MessageType.NORMAL;
       this.sendBroadcastMessage(message);
     }
     this.lastmsg = message.content;
@@ -65,8 +67,9 @@ export class ChatService {
         chatMessage.recipients = msg._recipients;
         chatMessage.fileLocation = msg._fileLocation;
         chatMessage.fileName = msg._fileName;
+        chatMessage.sender = msg._sender;
 
-        console.log(`Delivering message ${chatMessage.content} to all observers`);
+        console.log(`Delivering message ${chatMessage.content} to all observers, sender ${chatMessage.sender ? chatMessage.sender["_name"] : undefined}`);
         console.log(chatMessage);
         observer.next(chatMessage);
       });

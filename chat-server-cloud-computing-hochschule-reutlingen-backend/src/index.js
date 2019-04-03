@@ -94,7 +94,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on("new_message", function(msg) {
-    console.log(`Message reads '${msg._content}', timestamp '${msg._timestamp}', file location '${msg._fileLocation}'`);
+    console.log(`Message reads '${msg._content}', timestamp '${msg._timestamp}', sender '${msg._sender._name}, file location '${msg._fileLocation}'`);
     if (msg._type === "PRIVATE") {
       console.log(`Message type ${msg._type}`);
 
