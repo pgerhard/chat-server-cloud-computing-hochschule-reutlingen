@@ -1,16 +1,27 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<div>
-  Username: {{retrieveUsername()}}
-  <button class="msg_send_btn" type="button" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+  <div style="display:inline"class="recent_heading">
+    <h4 style="display:inline">Log Out: </h4>
+      <button style="display:inline" class="logout" type="button" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
+  </div>
+
+  <div class="chat_list active_chat">
+  <div class="chat_people">
+    <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
+    <div class="chat_ib">
+      <h5>{{retrieveUsername()}}<span class="chat_date">{{userService.loggedInUser.getDate()}}</span></h5>
+      <p>{{chatService.lastmsg}}</p>
+
+    </div>
+  </div>
 </div>
-<h5>Logged in Users</h5>
-<div>
-  <ul>
-    <li *ngFor="let user of loggedInUsers()">
-      <div>
-        <p>{{user.name}}</p>
+
+<div class = "loggedInUsers">
+<h5 class = "loggedInUsers_head">Logged in Users</h5>
+    <div class = "users" *ngFor="let user of loggedInUsers()">
+      <div class="users_u ">
+        {{user.name}}
       </div>
-    </li>
-  </ul>
+    </div>
+
 </div>

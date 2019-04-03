@@ -1,31 +1,62 @@
 <div class="mesgs">
   <div class="msg_history">
+
     <ul>
-      <li *ngFor="let msg of messages">
-        <div>
-          <p>{{msg.content}}</p>
-          <p>{{msg.timestamp}}</p>
-          <p>{{msg.type.toString()}}</p>
-          <p>From: {{msg.sender}}</p>
-          <div>
-            <p>
-              To:
-            </p>
-            <ul>
-              <li *ngFor="let recipient of msg.recipients">
-                <p>{{recipient["_name"]}}</p>
-              </li>
-            </ul>
+      <span *ngFor="let msg of messages">
+        <div >
+
+          <div *ngIf = "msg.type==='WELCOME'">
+            <div class= "sent_msg">
+                 <p>{{msg.content}}</p>
+              </div>
           </div>
+
+          <div *ngIf = "msg.type ==='PRIVATE'" >
+            <div class="private_msg">
+                 <p>{{msg.content}}</p>
+              </div>
+          </div>
+
+          <div *ngIf = "msg.type ==='NORMAL'" >
+            <div class="general_msg">
+                 <p>{{msg.content}}</p>
+              </div>
+          </div>
+
+          <h6 class="time_date">{{msg.timestamp}}</h6>
+          <!--  <p class="type_msg">{{msg.type.toString()}}</p>
+          <p>From: {{msg._sender}}</p>-->
+
+          <div>
+            <span class="time_date" style="display:inline">
+              <div style="display:inline" *ngIf = "msg.type==='WELCOME'">
+              <p style="display:inline" class="type_msg_welcome">{{msg.type.toString()}}</p>
+              </div>
+               <div style="display:inline" *ngIf = "msg.type==='NORMAL'">
+              <p style="display:inline" class="type_msg_general">{{msg.type.toString()}}</p>
+                 To:
+              </div>
+               <div style="display:inline" *ngIf = "msg.type==='PRIVATE'">
+              <p style="display:inline" class="type_msg_private">{{msg.type.toString()}}</p>
+                 To:
+              </div>
+              <p class="time_date" style="display:inline" *ngFor="let recipient of msg.recipients">
+                 [ {{recipient["_name"]}}]
+              </p>
+             </span>
+          </div>
+
+
         </div>
         <div>
           <a href="{{msg.fileLocation}}" download>{{msg.fileName}}</a>
         </div>
-      </li>
+      </span>
+
     </ul>
   </div>
 
-  <button class="msg_send_btn" type="button"><i class="fa fa-paperclip" aria-hidden="true"></i></button>
+
   <div class="type_msg">
     <div class="input_msg_write">
       <input type="text" class="write_msg" [(ngModel)]="message" (keydown.enter)="sendMessage()" placeholder="Type a message" />

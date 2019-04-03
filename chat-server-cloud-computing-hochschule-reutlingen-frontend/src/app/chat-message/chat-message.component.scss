@@ -41,4 +41,95 @@
   width: 70%;
 }
 
+.incoming_msg_img {
+  display: inline-block;
+  width: 3%;
+}
 
+.incoming_msg_img img {
+  width: 100%;
+}
+
+.received_msg {
+  display: inline-block;
+  padding: 0 0 0 10px;
+  vertical-align: top;
+  width: 92%;
+}
+
+.received_with_msg p {
+  background: #ebebeb none repeat scroll 0 0;
+  border-radius: 0 15px 15px 15px;
+  color: #646464;
+  font-size: 14px;
+  margin: 0;
+  padding: 5px 10px 5px 12px;
+  width: 100%;
+}
+
+
+.time_date {
+  color: #747474;
+  display: block;
+  font-size: 12px;
+  margin: 8px 0 0;
+}
+.type_msg_welcome {
+  color: #d2691e;
+  font-size: 16px;
+  margin: auto;
+  line-height: 29px;
+}
+
+.type_msg_private {
+  color: #28a745;
+  font-size: 16px;
+  margin: auto;
+  line-height: 29px;
+}
+
+.type_msg_general {
+  color: #c4c4c4;
+  font-size: 16px;
+  margin: auto;
+  line-height: 29px;
+}
+
+
+.outgoing_msg {
+  overflow: hidden;
+  margin: 26px 0 26px;
+}
+
+
+.sent_msg p {
+  background:#d2691e none repeat scroll 0 0;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 0; color:#fff;
+  padding: 5px 10px 5px 12px;
+  width:100%;
+}
+
+
+.private_msg{
+  background: #ecf9f2 none repeat scroll 0 0;
+  border-radius: 0 15px 15px 15px;
+  color: #646464;
+  font-size: 14px;
+  margin: 0;
+  padding: 5px 10px 5px 12px;
+  width: 100%;
+  border-color: #28a745;
+
+}
+
+.general_msg{
+  background: #ebebeb none repeat scroll 0 0;
+  border-radius: 0 15px 15px 15px;
+  color: #646464;
+  font-size: 14px;
+  margin: 0;
+  padding: 5px 10px 5px 12px;
+  width: 100%;
+}

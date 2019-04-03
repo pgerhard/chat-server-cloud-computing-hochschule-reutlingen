@@ -10,27 +10,13 @@
 
 <div class="messaging">
   <div class="inbox_msg">
-
-
     <div class="inbox_people">
-      <app-user-details></app-user-details>
-      <app-rooms></app-rooms>
       <div class="inbox_chat scroll">
-        <div class="chat_list active_chat">
-          <div class="chat_people">
-            <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
-            <div class="chat_ib">
-              <h5>{{retrieveUsername()}}<span class="chat_date">{{retrieveLatestMessageDate()}}</span></h5>
-              <p>{{retrieveLatestMessage()}}</p>
-            </div>
-          </div>
-        </div>
+        <app-user-details></app-user-details>
+        <app-rooms></app-rooms>
       </div>
     </div>
-
-
     <app-chat-message></app-chat-message>
-
   </div>
 </div>
 

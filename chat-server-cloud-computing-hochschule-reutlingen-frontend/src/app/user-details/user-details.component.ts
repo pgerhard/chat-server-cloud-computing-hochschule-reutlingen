@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../user.service";
 import { User } from "../user";
+import {ChatService} from "../chat.service";
 
 @Component({
   selector: "app-user-details",
@@ -8,7 +9,7 @@ import { User } from "../user";
   styleUrls: ["./user-details.component.scss"]
 })
 export class UserDetailsComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,private chatService: ChatService) {}
 
   ngOnInit() {}
 

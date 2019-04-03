@@ -1,0 +1,107 @@
+.chat_ib h5 {
+  font-size: 15px;
+  color: #464646;
+  margin: 0 0 8px 0;
+}
+
+.chat_ib h5 span {
+  font-size: 13px;
+  float: right;
+}
+
+.chat_ib p {
+  font-size: 12px;
+  color: #989898;
+  margin: auto;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat_img {
+  float: left;
+  width: 11%;
+}
+
+.chat_img img {
+  width: 100%;
+}
+
+.chat_ib {
+  float: left;
+  padding: 0 0 0 15px;
+  width: 88%;
+}
+
+.chat_people {
+  overflow: hidden;
+  clear: both;
+}
+
+.chat_list {
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+  padding: 18px 16px 10px;
+}
+
+.inbox_chat {
+  height: 550px;
+  overflow-y: scroll;
+}
+
+.active_chat {
+  background: #e8f6ff;
+}
+
+.headind_srch {
+  padding: 10px 29px 10px 20px;
+  overflow: hidden;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.recent_heading h4 {
+  color: #d2691e;
+  font-size: 16px;
+  margin: auto;
+  line-height: 29px;
+}
+
+.srch_bar input {
+  outline: none;
+  border: 1px solid #cdcdcd;
+  border-width: 0 0 1px 0;
+  width: 80%;
+  padding: 2px 0 4px 6px;
+  background: none;
+}
+
+.srch_bar .input-group-addon button {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  border: medium none;
+  padding: 0;
+  color: #d2691e;
+  font-size: 18px;
+}
+
+.logout{
+  margin: 0 0 +100 0px;
+}
+
+.loggedInUsers{
+  background: #ecf9f2 none repeat scroll 0 0;
+}
+
+.loggedInUsers_head{
+  color: grey;
+  background: white;
+  border-color: #28a745;
+}
+
+.users{
+  padding: 10px;
+  text-align: left;
+}
+.users_u{
+  border-color: #28a745;
+}
