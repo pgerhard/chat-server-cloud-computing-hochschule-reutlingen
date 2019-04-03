@@ -114,7 +114,11 @@ io.on("connection", function(socket) {
         console.log(`No room with required participants. Creating new one`);
         let roomName = msg._recipients.map(recipient => recipient._name).join("");
         room = createRoom(roomName);
-        msg._recipients.forEach(recipient => room.participants.push(users.get(recipient._name)));
+        msg._recipients.forEach(recipient => {
+          const user = users.get(recipient._name);
+          room.participants.push(user);
+          io.sockets.connected[user._socketId].join(room._name);
+        });
       } else if (matchedRooms.length === 1) {
         room = matchedRooms[0];
       } else {
