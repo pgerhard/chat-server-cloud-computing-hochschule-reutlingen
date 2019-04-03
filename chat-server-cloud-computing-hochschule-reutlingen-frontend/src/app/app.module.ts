@@ -8,7 +8,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { ChatMessageComponent } from "./chat-message/chat-message.component";
 import { ChatComponent } from "./chat/chat.component";
 import { UserDetailsComponent } from "./user-details/user-details.component";
-import { RoomsComponent } from "./chat-list/rooms.component";
+import { RoomsComponent } from "./rooms/rooms.component";
 
 @NgModule({
   declarations: [
