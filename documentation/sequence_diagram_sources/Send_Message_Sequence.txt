@@ -1,0 +1,11 @@
+title Send Message Sequence
+
+alt file to upload exists
+ChatMessageComponent->ChatService:Send file
+ChatService->Server: Send file
+ChatService<-Server: Location of file
+ChatMessageComponent<-ChatService: File location
+ChatMessageComponent->ChatMessageComponent: Set file location in file
+end
+ChatMessageComponent->Server: Emit new message
+ChatMessageComponent<-Server: Send message to recipients

@@ -6,6 +6,7 @@ alt loggedInUser == null
 AppComponent->LoginComponent: Show Login Component
 LoginComponent->UserService: Request Login User
 UserService->WindowLocalStorage: Store logged in user
+UserService->Server: Register new user
 UserService->LoginComponent: Login Success or Failure
 alt loginSuccessful
 LoginComponent->AppComponent: Attempt to navigate to ChatComponent
