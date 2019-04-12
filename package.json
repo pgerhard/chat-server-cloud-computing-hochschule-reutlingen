@@ -2,9 +2,12 @@
   "name": "chat-server",
   "version": "0.0.1",
   "description": "Root package.json for chat server project",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "dependencies": {},
   "scripts": {
-    "start": "chat-server-cloud-computing-hochschule-reutlingen-backend/standalone/index.js"
+    "start": "node chat-server-cloud-computing-hochschule-reutlingen-backend/standalone/index.js"
   },
   "devDependencies": {}
 }
