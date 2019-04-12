@@ -1,9 +1,12 @@
 {
   "name": "chat-server-cloud-computing-hochschule-reutlingen-frontend",
   "version": "0.0.0",
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration=production",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
