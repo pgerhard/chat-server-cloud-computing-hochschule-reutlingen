@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  backendUrl: "https://chat-app-server.eu-de.mybluemix.net/"
 };
