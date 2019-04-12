@@ -4,7 +4,7 @@
   "description": "Root package.json for chat server project",
   "dependencies": {},
   "scripts": {
-    "start": "node chat-server-cloud-computing-hochschule-reutlingen-backend/standalone/index.js"
+    "start": "chat-server-cloud-computing-hochschule-reutlingen-backend/standalone/index.js"
   },
   "devDependencies": {}
 }
