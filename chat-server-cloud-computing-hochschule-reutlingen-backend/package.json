@@ -10,6 +10,7 @@
     "express": "^4.16.4",
     "formidable": "^1.2.1",
     "lodash": "^4.17.11",
+    "request": "^2.88.0",
     "socket.io": "^1.7.4"
   },
   "scripts": {

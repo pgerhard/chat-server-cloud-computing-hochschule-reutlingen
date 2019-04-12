@@ -24,26 +24,27 @@
           </div>
 
           <h6 class="time_date">{{msg.timestamp}}</h6>
-          <!--  <p class="type_msg">{{msg.type.toString()}}</p>
-          <p>From: {{msg._sender}}</p>-->
 
           <div>
             <span class="time_date" style="display:inline">
               <div style="display:inline" *ngIf = "msg.type==='WELCOME'">
-              <p style="display:inline" class="type_msg_welcome">{{msg.type.toString()}}</p>
+                <p style="display:inline" class="type_msg_welcome">{{msg.type.toString()}}</p>
               </div>
                <div style="display:inline" *ngIf = "msg.type==='NORMAL'">
-              <p style="display:inline" class="type_msg_general">{{msg.type.toString()}}</p>
+                <p style="display:inline" class="type_msg_general">{{msg.type.toString()}}</p>
                  To:
               </div>
                <div style="display:inline" *ngIf = "msg.type==='PRIVATE'">
-              <p style="display:inline" class="type_msg_private">{{msg.type.toString()}}</p>
+                <p style="display:inline" class="type_msg_private">{{msg.type.toString()}}</p>
                  To:
               </div>
               <p class="time_date" style="display:inline" *ngFor="let recipient of msg.recipients">
                  [ {{recipient["_name"]}}]
               </p>
              </span>
+          </div>
+          <div>
+            <span>MOOD: {{msg.mood}}</span>
           </div>
 
 

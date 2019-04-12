@@ -10,6 +10,7 @@ var lodash = require("lodash");
 var path = require("path");
 var formidable = require("formidable");
 var fs = require("fs");
+var request = require("request");
 
 const generalRoomName = "General";
 const users = new Map();
@@ -226,8 +227,22 @@ function sendDisconnectedMessage(room, user) {
  * @param msg to send
  */
 function sendMessageToRoom(room, msg) {
-  room.addMessage(msg);
-  io.to(`${room.name}`).emit("broadcast_message", msg);
+  request.post(
+    {
+      headers: {},
+      url: "https://ecstatic-ptolemy.eu-de.mybluemix.net/tone",
+      json: true,
+      body: {
+        texts: [msg._content]
+      }
+    },
+    function(error, response, body) {
+      console.log(body);
+      msg._mood = body.mood;
+      room.addMessage(msg);
+      io.to(`${room.name}`).emit("broadcast_message", msg);
+    }
+  );
 }
 
 /**

@@ -62,6 +62,7 @@ export class ChatService {
       this.socketIo.socket.on("broadcast_message", msg => {
         const chatMessage = new ChatMessage();
         chatMessage.content = msg._content;
+        chatMessage.mood = msg._mood;
         chatMessage.timestamp = msg._timestamp;
         chatMessage.type = MessageType.parseMessageType(msg._type);
         chatMessage.recipients = msg._recipients;

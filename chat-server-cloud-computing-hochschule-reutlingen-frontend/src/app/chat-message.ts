@@ -4,6 +4,7 @@ import { MessageType } from "./message-type";
 export class ChatMessage {
   private _sender: User;
   private _content: string;
+  private _mood: string;
   private _recipients: User[] = [];
   private _type: MessageType;
   private _timestamp: Date;
@@ -24,6 +25,14 @@ export class ChatMessage {
 
   set content(value: string) {
     this._content = value;
+  }
+
+  get mood(): string {
+    return this._mood;
+  }
+
+  set mood(value: string) {
+    this._mood = value;
   }
 
   get recipients(): User[] {
