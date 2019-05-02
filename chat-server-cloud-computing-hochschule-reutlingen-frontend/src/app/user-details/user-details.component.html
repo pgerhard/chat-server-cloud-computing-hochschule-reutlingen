@@ -5,9 +5,11 @@
       <button style="display:inline" class="logout" type="button" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></button>
   </div>
 
-  <div class="chat_list active_chat">
+  <div style="cursor: pointer;" (click)="profilUser($event)" class="chat_list active_chat">
   <div class="chat_people">
-    <div class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
+
+    <div  class="chat_img"> <img src="https://unixtitan.net/images/female-vector-user-5.png" alt="sunil"> </div>
+
     <div class="chat_ib">
       <h5>{{retrieveUsername()}}<span class="chat_date">{{retrieveUserLogInDate()}}</span></h5>
       <p>{{retrieveLastMessage()}}</p>

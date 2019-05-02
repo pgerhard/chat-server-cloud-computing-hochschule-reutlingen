@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "../user.service";
 import { User } from "../user";
 import {ChatService} from "../chat.service";
+import {ChatMessageComponent} from "../chat-message/chat-message.component";
 
 @Component({
   selector: "app-user-details",
@@ -30,6 +31,14 @@ export class UserDetailsComponent implements OnInit {
   }
 
   retrieveUserLogInDate(){
-    return this.userService.loggedInUser.date;
+    return this.userService.loggedInUser.getDate();
   }
+
+  profilUser(e){
+    console.log("Angeklickt!")
+    e.preventDefault();
+
+  }
+
+
 }
