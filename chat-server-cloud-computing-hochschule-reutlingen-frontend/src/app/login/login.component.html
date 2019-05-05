@@ -3,32 +3,47 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-<section class="login-block">
-  <form (submit)="loginUser($event)">
+<section  class="login-block">
+ <form (submit)="loginUser($event)">
   <div class="container">
     <div class="card card-login mx-auto text-center ">
       <div class="card-header ">
         <span> <img src="https://img.business.com/w/1000/aHR0cHM6Ly93d3cuYnVzaW5lc3MuY29tL2ltYWdlcy9yZXYvcHJvZC9jZS81MjQ2MS1saXZlY2hhdC1ib3guanBn" class="w-75" alt="Logo"> </span><br/>
 
+        <div id="message">
+          <h3>Password must contain the following:</h3>
+          <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+          <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+          <p id="number" class="invalid">A <b>number</b></p>
+          <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+        </div>
+
+        <div id="nameinput">
+          <h3>Name must contain the following:</h3>
+          <p id="nameinp" class="invalid">Minimum <b>3 Letter (max. 10)</b></p>
+        </div>
       </div>
       <div class="input-group form-group">
         <div class="input-group-prepend">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
         </div>
-        <input type="text" name="email" class="form-control" placeholder="Username">
+        <input id= "nam" type="text" name="name" class="form-control" placeholder="Username"required="required" >
       </div>
       <div class="input-group form-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fas fa-key"></i></span>
       </div>
-      <input type="password" name="password" class="form-control" placeholder="Password">
+      <input id="psw" type="password" name="password" class="form-control" placeholder="Password" required="required" >
     </div>
 
       <div class="form-group">
-        <input type="submit" name="btn" value="Login" class="btn btn-outline-danger float-right login_btn">
+        <input id = "butn" type="submit" name="btn" value="Login" class="btn btn-outline-danger float-right login_btn">
+
       </div>
+
     </div>
   </div>
+
   </form>
 </section>
 
