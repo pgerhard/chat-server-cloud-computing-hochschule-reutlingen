@@ -11,14 +11,18 @@ import { UserService } from "../user.service";
 export class LoginComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) {}
 
+  fileToUpload: File = null;
+
   checkLetter = false;
   checkCapital = false;
   checkNumber = false;
   checkLength = false;
 
   ngOnInit() {
+
     this.nameInput();
     this.passwordInput();
+
   }
 
   btnClick() {
@@ -38,7 +42,7 @@ export class LoginComponent implements OnInit {
           const user = new User();
           user.name = username;
           user.password = passw;
-          
+
           this.userService.login(user);
 
           this.btnClick();
@@ -64,13 +68,11 @@ export class LoginComponent implements OnInit {
     // When the user clicks on the name field, show the nameinput box
     username.onfocus = function() {
       document.getElementById("nameinput").style.display = "block";
+      document.getElementById("file").style.display = "block";
+
     }
 
-    // When the user clicks outside of the name field, hide the nameinput box
-    username.onblur = function() {
-      document.getElementById("nameinput").style.display = "none";
-    }
-
+    
     username.onkeyup=function () {
       var name_Let = /[a-zA-Z]/g;
       if(username.value.match(name_Let) && (username.value.length>2 && username.value.length<10)) {
@@ -95,6 +97,8 @@ export class LoginComponent implements OnInit {
 
 // When the user clicks on the password field, show the message box
     myInput.onfocus = function() {
+      document.getElementById("nameinput").style.display = "none";
+      document.getElementById("file").style.display = "none";
       document.getElementById("message").style.display = "block";
     }
 
@@ -152,4 +156,10 @@ export class LoginComponent implements OnInit {
     return this.checkValidPasword();
   }
 
+  handleFileInput(files: any) {
+    this.fileToUpload = files.item(0);
+    if (this.fileToUpload) {
+      console.log(`Uploaded file ${this.fileToUpload.name}, size ${this.fileToUpload.size}`);
+    }
+  }
 }

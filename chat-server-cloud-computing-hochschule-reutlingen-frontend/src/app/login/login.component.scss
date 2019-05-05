@@ -41,7 +41,7 @@
 
 .btn-outline-danger {
   color: grey;
-  background: #ecf9f2;
+  background: white;
   font-size: 18px;
 
 
@@ -79,7 +79,6 @@
 }
 
 
-/* The message box is shown when the user clicks on the password field */
 #message {
   display:none;
   background: #f1f1f1;
@@ -91,7 +90,7 @@
 
 #message p {
   padding: 10px 35px;
-  font-size: 18px;
+  font-size: 13px;
 }
 
 .valid {
@@ -126,5 +125,47 @@
 
 #nameinput p {
   padding: 10px 35px;
-  font-size: 18px;
+  font-size: 13px;
 }
+
+[type="file"] {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+[type="file"] + label {
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+  
+
+  &.btn-1 {
+    border: 1px solid #28a745;
+    background-color: #ecf9f2;
+    color: grey;
+    border-radius: 50px;
+    overflow: hidden;
+
+
+    &:hover {
+      box-shadow: 0 4px darken(#ecf9f2, 5%);
+      top: 1px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+

@@ -8,10 +8,10 @@
   <div class="container">
     <div class="card card-login mx-auto text-center ">
       <div class="card-header ">
-        <span> <img src="https://img.business.com/w/1000/aHR0cHM6Ly93d3cuYnVzaW5lc3MuY29tL2ltYWdlcy9yZXYvcHJvZC9jZS81MjQ2MS1saXZlY2hhdC1ib3guanBn" class="w-75" alt="Logo"> </span><br/>
+        <span > <img src="https://img.business.com/w/1000/aHR0cHM6Ly93d3cuYnVzaW5lc3MuY29tL2ltYWdlcy9yZXYvcHJvZC9jZS81MjQ2MS1saXZlY2hhdC1ib3guanBn" class="w-75" alt="Logo"> </span><br/>
 
         <div id="message">
-          <h3>Password must contain the following:</h3>
+          <h4>Password must contain the following:</h4>
           <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
           <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
           <p id="number" class="invalid">A <b>number</b></p>
@@ -19,8 +19,10 @@
         </div>
 
         <div id="nameinput">
-          <h3>Name must contain the following:</h3>
+          <h4>Name must contain the following:</h4>
           <p id="nameinp" class="invalid">Minimum <b>3 Letter (max. 10)</b></p>
+          <input id="file" #fileInput type="file" (change)="handleFileInput($event.target.files)" placeholder="Select Foto to Ptofil"/>
+          <label for="file" class="btn-1">Your photo</label>
         </div>
       </div>
       <div class="input-group form-group">
