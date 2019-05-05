@@ -1,7 +1,9 @@
 export class User {
+
   private _name: string;
   private _date: string;
   private _lastmsg: string;
+  private _password:string;
 
   get name(): string {
     return this._name;
@@ -27,6 +29,13 @@ export class User {
     return dat;
   }
 
+  get password(): string {
+    return this._password;
+  }
+
+  set password(value: string) {
+    this._password = value;
+  }
   get lastmsg(): string {
     return this._lastmsg;
   }

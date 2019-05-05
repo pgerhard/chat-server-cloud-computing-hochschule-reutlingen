@@ -33,10 +33,12 @@ export class LoginComponent implements OnInit {
         console.log(e.target.elements[1].value);
 
         var username = e.target.elements[0].value;
-
+        var passw = e.target.elements[1].value;
 
           const user = new User();
           user.name = username;
+          user.password = passw;
+          
           this.userService.login(user);
 
           this.btnClick();
@@ -59,12 +61,12 @@ export class LoginComponent implements OnInit {
     var username = document.getElementById("nam");
     var nameinput = document.getElementById("nameinp");
 
-    // When the user clicks on the name field, show the message box
+    // When the user clicks on the name field, show the nameinput box
     username.onfocus = function() {
       document.getElementById("nameinput").style.display = "block";
     }
 
-    // When the user clicks outside of the name field, hide the message box
+    // When the user clicks outside of the name field, hide the nameinput box
     username.onblur = function() {
       document.getElementById("nameinput").style.display = "none";
     }
