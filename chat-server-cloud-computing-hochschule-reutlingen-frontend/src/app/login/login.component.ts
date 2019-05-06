@@ -13,10 +13,6 @@ export class LoginComponent implements OnInit {
 
   fileToUpload: File = null;
 
-  checkLetter = false;
-  checkCapital = false;
-  checkNumber = false;
-  checkLength = false;
 
   ngOnInit() {
 
@@ -51,18 +47,8 @@ export class LoginComponent implements OnInit {
   }
 
 
-  checkValidPasword(){
-    if(this.checkCapital && this.checkLength && this.checkLetter && this.checkNumber){
-      console.log("!!! " + this.checkNumber + " " + this.checkLength )
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
-
   nameInput(){
-    var username = document.getElementById("nam");
+    var username = (document.getElementById("nam" ));
     var nameinput = document.getElementById("nameinp");
 
     // When the user clicks on the name field, show the nameinput box
@@ -72,10 +58,10 @@ export class LoginComponent implements OnInit {
 
     }
 
-    
+
     username.onkeyup=function () {
       var name_Let = /[a-zA-Z]/g;
-      if(username.value.match(name_Let) && (username.value.length>2 && username.value.length<10)) {
+      if((<HTMLInputElement>username).value.match(name_Let) && ((<HTMLInputElement>username).value.length>2 && (<HTMLInputElement>username).value.length<10)) {
         nameinput.classList.remove("invalid");
         nameinput.classList.add("valid");
         return true;
@@ -85,6 +71,8 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+
+
 
   passwordInput(){
 
@@ -111,10 +99,10 @@ export class LoginComponent implements OnInit {
     myInput.onkeyup = function() {
       //  lowercase letters
       var lowerCaseLetters = /[a-z]/g;
-      if(myInput.value.match(lowerCaseLetters)) {
+      if((<HTMLInputElement>myInput).value.match(lowerCaseLetters)) {
         letter.classList.remove("invalid");
         letter.classList.add("valid");
-        this.checkLetter=true;
+
       } else {
         letter.classList.remove("valid");
         letter.classList.add("invalid");
@@ -122,10 +110,10 @@ export class LoginComponent implements OnInit {
 
       // capital letters
       var upperCaseLetters = /[A-Z]/g;
-      if(myInput.value.match(upperCaseLetters)) {
+      if((<HTMLInputElement>myInput).value.match(upperCaseLetters)) {
         capital.classList.remove("invalid");
         capital.classList.add("valid");
-        this.checkCapital = true;
+
       } else {
         capital.classList.remove("valid");
         capital.classList.add("invalid");
@@ -133,28 +121,30 @@ export class LoginComponent implements OnInit {
 
       // numbers
       var numbers = /[0-9]/g;
-      if(myInput.value.match(numbers)) {
+      if((<HTMLInputElement>myInput).value.match(numbers)) {
         number.classList.remove("invalid");
         number.classList.add("valid");
-        this.checkNumber=true;
+
       } else {
         number.classList.remove("valid");
         number.classList.add("invalid");
       }
 
       // length
-      if(myInput.value.length >= 8) {
+      if((<HTMLInputElement>myInput).value.length >= 8) {
         length.classList.remove("invalid");
         length.classList.add("valid");
-        this.checkLength = true;
+
       } else {
         length.classList.remove("valid");
         length.classList.add("invalid");
       }
 
     }
-    return this.checkValidPasword();
+
   }
+
+
 
   handleFileInput(files: any) {
     this.fileToUpload = files.item(0);
