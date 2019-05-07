@@ -3,11 +3,9 @@ const Room = require("./room");
 
 var app = require("express")();
 var http = require("http").Server(app);
-var cors = require("cors");
 var io = require("socket.io")(http);
 var crypto = require("crypto");
 var lodash = require("lodash");
-var path = require("path");
 var formidable = require("formidable");
 var fs = require("fs");
 var request = require("request");
@@ -16,21 +14,16 @@ const generalRoomName = "General";
 const users = new Map();
 const rooms = new Map();
 
-// Allowed extensions list can be extended depending on your own needs
-const allowedExt = [".js", ".ico", ".css", ".png", ".jpg", ".woff2", ".woff", ".ttf", ".svg"];
-
-app.options("*", cors());
 app.post("/upload-file", (req, res) => {
   const targetDir = __dirname;
   var form = new formidable.IncomingForm().parse(req, (err, fields, files) => {
     const newPath = targetDir + "/uploads/" + files.fileKey.name;
     fs.rename(files.fileKey.path, newPath, function(err) {
       console.log(`Successfully uploaded file and moved it to desired directory`);
+      console.log(`Uploaded file location: ${req.protocol}://${req.get("host")}/uploads/${files.fileKey.name}`);
       res.location(`${req.protocol}://${req.get("host")}/uploads/${files.fileKey.name}`);
       res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Methods", "*");
-      res.header("Access-Control-Allow-Headers", "*");
-      res.header("Access-Control-Expose-Headers", "*");
+      res.header("Access-Control-Expose-Headers", "Location");
       res.status(201);
       res.write("File uploaded and moved!");
       res.end();
@@ -40,15 +33,6 @@ app.post("/upload-file", (req, res) => {
 
 app.get("/uploads/*", function(req, res) {
   res.download(`${__dirname}${req.url}`);
-});
-
-app.get("*", function(req, res) {
-  if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-    console.log(`${req.url}`);
-    res.sendFile(path.resolve(`${__dirname}/dist/${req.url}`));
-  } else {
-    res.sendFile(path.resolve(`${__dirname}/dist/index.html`));
-  }
 });
 
 io.on("connection", function(socket) {

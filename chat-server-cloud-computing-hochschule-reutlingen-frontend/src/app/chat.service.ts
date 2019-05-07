@@ -95,8 +95,12 @@ export class ChatService {
     const endpoint = `${this.backendUrl}/upload-file`;
     const formData: FormData = new FormData();
     formData.append("fileKey", fileToUpload, fileToUpload.name);
-    return this.httpClient
-      .post(endpoint, formData, { observe: "response", headers: new HttpHeaders({}), responseType: "text" })
-      .pipe(map((value: HttpResponse<Object>) => value.headers.get("Location")));
+    return this.httpClient.post(endpoint, formData, { observe: "response", headers: new HttpHeaders({}), responseType: "text" }).pipe(
+      map((value: HttpResponse<Object>) => {
+        console.log(`ChatService: File upload response headers`);
+        console.log(value.headers.keys());
+        return value.headers.get("Location");
+      })
+    );
   }
 }
