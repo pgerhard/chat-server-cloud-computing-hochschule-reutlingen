@@ -2,3 +2,4 @@ applications:
   - name: chat-app-server
     memory: 256M
     instances: 1
+    buildpack: nodejs_buildpack
