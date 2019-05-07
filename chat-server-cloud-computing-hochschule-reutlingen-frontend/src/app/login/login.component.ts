@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
   fileToUpload: File = null;
 
 
+
+
   ngOnInit() {
 
     this.nameInput();
@@ -29,11 +31,14 @@ export class LoginComponent implements OnInit {
     e.preventDefault();
 
 
-        console.log("!!!" + e.target.elements[0].value);
-        console.log(e.target.elements[1].value);
+        console.log("!!! [0]" + e.target.elements[0].value);
+        console.log("[1].."+ e.target.elements[1].value);
+        console.log("[2].."+ e.target.elements[2].value);
 
-        var username = e.target.elements[0].value;
-        var passw = e.target.elements[1].value;
+
+        var username = e.target.elements[1].value;
+        var passw = e.target.elements[2].value;
+
 
           const user = new User();
           user.name = username;
@@ -41,6 +46,7 @@ export class LoginComponent implements OnInit {
 
           this.userService.login(user);
 
+          console.log("Test_username: " + this.userService.loggedInUser.name);
           this.btnClick();
 
 
