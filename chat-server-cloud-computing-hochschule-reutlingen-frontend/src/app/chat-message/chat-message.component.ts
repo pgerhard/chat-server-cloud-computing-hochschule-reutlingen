@@ -36,7 +36,7 @@ export class ChatMessageComponent implements OnInit {
       console.log(`Detected file upload. Sending file`);
       chatMessage.fileName = this.fileToUpload.name;
       this.chatService.sendFile(this.fileToUpload).subscribe(location => {
-        console.log(`${location}`);
+        console.log(`ChatMessageComponent: Uploaded file location ${location}`);
         chatMessage.fileLocation = location;
         this.doSendMessage(chatMessage);
         this.fileToUpload = null;
