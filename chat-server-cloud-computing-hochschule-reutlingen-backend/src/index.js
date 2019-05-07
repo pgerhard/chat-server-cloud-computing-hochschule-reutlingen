@@ -21,12 +21,16 @@ app.use(function(req, res, next) {
     next();
   } else {
     res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubdomains; preload");
-    if (req.secure) {
-      // request was via https, so do no special handling
-      next();
-    } else {
+    console.log(`Request header "X-Forwarded-Proto": ${JSON.stringify(req.header("X-Forwarded-Proto"))}`);
+    console.log(`Test if original request was not HTTPS: ${req.header("X-Forwarded-Proto") !== "https"}`);
+    if (req.header("X-Forwarded-Proto") !== "https") {
       // request was via http, so redirect to https
+      console.log("Request was not sent via HTTPS. Redirecting to HTTPS");
       res.redirect("https://" + req.headers.host + req.url);
+    } else {
+      // request was via https, so do no special handling
+      console.log("Request was sent via HTTPS");
+      next();
     }
   }
 });
