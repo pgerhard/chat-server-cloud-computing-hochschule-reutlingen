@@ -14,6 +14,17 @@ const generalRoomName = "General";
 const users = new Map();
 const rooms = new Map();
 
+app.use(function(req, res, next) {
+  res.removeHeader("X-Powered-By");
+  next();
+});
+
+app.get("/", (req, res) => {
+  res.write("Welcome to the Chat Server Backend. Please visit https://chat-app.eu-de.mybluemix.net to use the UI");
+  res.status(200);
+  res.end();
+});
+
 app.post("/upload-file", (req, res) => {
   const targetDir = __dirname;
   var form = new formidable.IncomingForm().parse(req, (err, fields, files) => {
