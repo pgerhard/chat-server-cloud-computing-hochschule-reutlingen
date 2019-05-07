@@ -7,6 +7,7 @@ import { MessageType } from "./message-type";
 import { UserService } from "./user.service";
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { map } from "rxjs/operators";
+import { environment } from "../environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -17,6 +18,8 @@ export class ChatService {
   rooms: Room[] = [];
 
   private privateMessageFilterRegex = new RegExp("#([a-zA-Z]+)", "gm");
+
+  private backendUrl: string = environment.backendUrl;
 
   constructor(private socketIo: SocketioService, private userService: UserService, private httpClient: HttpClient) {
     let parent = this;
@@ -89,7 +92,7 @@ export class ChatService {
   }
 
   sendFile(fileToUpload: File) {
-    const endpoint = "http://localhost:3000/upload-file";
+    const endpoint = `${this.backendUrl}/upload-file`;
     const formData: FormData = new FormData();
     formData.append("fileKey", fileToUpload, fileToUpload.name);
     return this.httpClient
