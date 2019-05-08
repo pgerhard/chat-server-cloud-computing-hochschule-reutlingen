@@ -1,6 +1,11 @@
-const User = require("./user");
+const Logger = require("./logger");
 const Room = require("./room");
+const User = require("./user");
+const IbmCloudObjectStorageClient = require("./ibmCloudObjectStorageClient");
+const Encoder = require("./encoder");
+const environment = require("./environment");
 
+let bodyParser = require("body-parser");
 var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
@@ -13,8 +18,14 @@ var request = require("request");
 const generalRoomName = "General";
 const users = new Map();
 const rooms = new Map();
+const logger = new Logger();
+const ibmCosClient = new IbmCloudObjectStorageClient();
+const encoder = new Encoder();
 
 app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+
   res.setHeader("Content-Security-Policy", "default-src 'none'");
   res.setHeader("X-XSS-Protection", "1; mode=block");
   res.setHeader("X-Content-Type-Options", "nosniff");
@@ -45,6 +56,28 @@ app.get("/", (req, res) => {
   res.write("Welcome to the Chat Server Backend. Please visit https://chat-app.eu-de.mybluemix.net to use the UI");
   res.status(200);
   res.end();
+});
+
+let jsonParser = bodyParser.json({ limit: "1mb" });
+app.post("/profile-picture", jsonParser, (req, res) => {
+  logger.debug(`Index: Received request to store profile picture`);
+  encoder
+    .md5Hash(req.body.username)
+    .then(hashedKey => {
+      console.log(hashedKey);
+      const key = hashedKey;
+      console.log(key);
+      ibmCosClient.slimCreateObject(environment.ibmCos.buckets.profilePictures, key, req.body.data);
+    })
+    .then(value => {
+      res.status(201);
+      res.end();
+    })
+    .catch(reason => {
+      console.log(`Error: ${reason}`);
+      res.status(500);
+      res.end();
+    });
 });
 
 app.post("/upload-file", (req, res) => {

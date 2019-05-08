@@ -91,7 +91,7 @@ export class ChatService {
     this.socketIo.socket.emit("new_message", message);
   }
 
-  sendFile(fileToUpload: File) {
+  sendFile(fileToUpload: File): Observable<string> {
     const endpoint = `${this.backendUrl}/upload-file`;
     const formData: FormData = new FormData();
     formData.append("fileKey", fileToUpload, fileToUpload.name);
