@@ -1,19 +1,27 @@
 
+.container{
+  display: inline-block;
+}
+
 .login-block{
 
   background: gainsboro;
   padding : 230px 230px;
 }
+
 .card {
   border: 1px solid #28a745;
   background:white ;
+
 }
+
 .card-login {
   margin-top: -100px;
   padding: 18px;
   max-width: 30rem;
-
 }
+
+
 
 .card-header {
   color: #ced4da;
@@ -23,28 +31,34 @@
   border-bottom: 0;
 }
 
+
+
 .input-group-prepend span{
   width: 50px;
   background-color: #D2691E;
   color: #fff;
   border:0 !important;
+
 }
+
+
 
 .login_btn{
   width: 130px;
 }
 
-.login_btn:hover{
 
+
+.login_btn:hover{
   background-color: #D2691E;
 }
+
+
 
 .btn-outline-danger {
   color: grey;
   background: white;
   font-size: 18px;
-
-
   border-color: #28a745;
 }
 
@@ -61,8 +75,8 @@
   border: 1px solid #28a745;
   border-radius: 0;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
 
+}
 
 .input-group-text {
 
@@ -76,8 +90,8 @@
   white-space: nowrap;
   border: 1px solid #ced4da;
   border-radius: 0;
-}
 
+}
 
 #message {
   display:none;
@@ -85,10 +99,19 @@
   color: #000;
   position: relative;
   padding: 20px;
-  margin-top: 10px;
+ // margin-top: 10px;
+ // margin-right: -100px;
+  //margin-left: 770px;
+  //margin-top: -410px;
+  //position: fixed;
+  float: right;
+  //width: 140px;
+
+
 }
 
 #message p {
+
   padding: 10px 35px;
   font-size: 13px;
 }
@@ -105,36 +128,53 @@
 
 .invalid {
   color: red;
+
 }
 
 .invalid:before {
+
   position: relative;
   left: -35px;
   content: "✖";
+
 }
 
-
 #nameinput {
+
   display:none;
   background: #f1f1f1;
   color: #000;
-  position: relative;
+  //position: relative;
   padding: 20px;
-  margin-top: 10px;
+  //margin-top: 10px;
+  //margin-left: 50px;
+  //margin-right: 770px;
+  //margin-bottom: -300px;
+ // position: fixed;
+  float: left;
+  //width: 150px;
+
+
 }
 
 #nameinput p {
+
   padding: 10px 35px;
   font-size: 13px;
+
 }
 
 [type="file"] {
+
   height: 0;
   overflow: hidden;
   width: 0;
+
 }
 
+
 [type="file"] + label {
+
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -147,25 +187,22 @@
 
 
   &.btn-1 {
+
     border: 1px solid #28a745;
     background-color: #ecf9f2;
     color: grey;
-    border-radius: 50px;
+   // border-radius: 50px;
     overflow: hidden;
+    float: left;
+
 
 
     &:hover {
+
       box-shadow: 0 4px darken(#ecf9f2, 5%);
       top: 1px;
     }
+
   }
+
 }
-
-
-
-
-
-
-
-
-

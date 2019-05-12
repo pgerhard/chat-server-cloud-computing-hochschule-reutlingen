@@ -14,13 +14,18 @@ export class LoginComponent implements OnInit {
 
   fileToUpload: File = null;
 
-
+<<<<<<< HEAD
+  ngOnInit() {
+    this.nameInput();
+    this.passwordInput();
+=======
 
 
   ngOnInit() {
 
-    this.nameInput(true,true,false,false,false,false);
+     this.nameInput(true,true,false,false,false,false);
 
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
   }
 
   btnClick() {
@@ -37,18 +42,22 @@ export class LoginComponent implements OnInit {
     var username = e.target.elements[1].value;
     var passw = e.target.elements[2].value;
 
-
+<<<<<<< HEAD
     const user = new User();
     user.name = username;
     user.password = passw;
+=======
+          const user = new User();
+          user.name = username;
+          user.password = passw;
 
-    this.userService.login(user);
+          this.userService.login(user);
 
-    console.log("Test_username: " + this.userService.loggedInUser.name);
+          console.log("Test_username: " + this.userService.loggedInUser.name);
 
 
-    this.btnClick();
-
+            this.btnClick();
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
 
     this.uploadService.uploadProfilePicture(username, this.fileToUpload);
     this.userService.login(user);
@@ -57,10 +66,18 @@ export class LoginComponent implements OnInit {
     this.btnClick();
   }
 
+<<<<<<< HEAD
+  nameInput() {
+    var username = document.getElementById("nam");
+=======
+
+
+
   nameInput(booleanNam,booleanPass,boolLetter,boolCapital,bollNumber,bollLength){
 
 
     var username = (document.getElementById("nam" ));
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
     var nameinput = document.getElementById("nameinp");
 
 
@@ -76,45 +93,53 @@ export class LoginComponent implements OnInit {
 
 
     // When the user clicks on the name field, show the nameinput box
+<<<<<<< HEAD
+    username.onfocus = function() {
+      document.getElementById("nameinput").style.display = "block";
+      document.getElementById("file").style.display = "block";
+    };
 
-    username.onfocus = function () {
+    username.onkeyup = function() {
+=======
+      username.onfocus = function () {
 
 
-      if (!booleanPass) {
-        document.getElementById("message").style.display = "block";
-      }
-
-      if(username.innerText.length>0) {
-        console.log("111: " + booleanNam);
-        if (!booleanNam) {
-
-          document.getElementById("nameinput").style.display = "block";
-          document.getElementById("file").style.display = "block";
-          if (!booleanPass) {
-
-            if(!bollLength || !boolLetter || !boolCapital || !bollNumber) {
-              document.getElementById("message").style.display = "block";
-            }
-          }
-        }
-        else {
-          if (!booleanPass) {
-            if(!bollLength || !boolLetter || !boolCapital || !bollNumber) {
-              document.getElementById("message").style.display = "block";
-            }
-          }
-          document.getElementById("nameinput").style.display = "none";
-          document.getElementById("file").style.display = "none";
+        if (!booleanPass) {
+          document.getElementById("message").style.display = "block";
         }
 
+        if(username.innerText.length>0) {
+          console.log("111: " + booleanNam);
+          if (!booleanNam) {
+
+            document.getElementById("nameinput").style.display = "block";
+            document.getElementById("file").style.display = "block";
+            if (!booleanPass) {
+
+              if(!bollLength || !boolLetter || !boolCapital || !bollNumber) {
+                document.getElementById("message").style.display = "block";
+              }
+            }
+          }
+          else {
+            if (!booleanPass) {
+              if(!bollLength || !boolLetter || !boolCapital || !bollNumber) {
+                document.getElementById("message").style.display = "block";
+              }
+            }
+            document.getElementById("nameinput").style.display = "none";
+            document.getElementById("file").style.display = "none";
+          }
+
+        }
+
+
       }
-
-
-    }
 
 
     username.onkeyup=function () {
 
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
       var name_Let = /[a-zA-Z]/g;
       if (
         (<HTMLInputElement>username).value.match(name_Let) &&
@@ -128,13 +153,44 @@ export class LoginComponent implements OnInit {
       } else {
         booleanNam = false;
 
+        //document.getElementById("nameinput").style.display = "block";
+        //document.getElementById("file").style.display = "block";
         nameinput.classList.remove("valid");
         nameinput.classList.add("invalid");
         console.log("Name Input: " + booleanNam);
 
 
       }
+<<<<<<< HEAD
+    };
+  }
 
+  passwordInput() {
+    var myInput = document.getElementById("psw");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+
+    // When the user clicks on the password field, show the message box
+    myInput.onfocus = function() {
+      document.getElementById("nameinput").style.display = "none";
+      document.getElementById("file").style.display = "none";
+      document.getElementById("message").style.display = "block";
+    };
+
+    // When the user clicks outside of the password field, hide the message box
+    myInput.onblur = function() {
+      document.getElementById("message").style.display = "none";
+    };
+
+    // When the user starts to type something inside the password field
+=======
+
+
+   //   if(myInput.innerText === ""){
+     //   booleanPass = false;
+      //}
 
 
       if( booleanNam && boolLetter && boolCapital && bollNumber && bollLength){
@@ -154,16 +210,16 @@ export class LoginComponent implements OnInit {
     username.onblur = function() {
       if(!booleanNam || username.innerText === ""){
 
-        // booleanNam = true;
+       // booleanNam = true;
         console.log("Kommt rein in MSG Name: ")
         console.log("TestName: " + booleanNam);
 
-        document.getElementById("nameinput").style.display = "block";
-        document.getElementById("file").style.display = "block";
+          document.getElementById("nameinput").style.display = "block";
+          document.getElementById("file").style.display = "block";
 
         if(!booleanPass && myInput.innerText.length>0){
 
-          document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.display = "block";
         }
       }else{
         if(!booleanPass && myInput.innerText.length>0){
@@ -180,37 +236,51 @@ export class LoginComponent implements OnInit {
 
 // When the user clicks on the password field, show the message box
 
+
     myInput.onfocus = function () {
+
+     /* if(myInput.innerText.length ===0){
+        booleanPass = true;
+
+      }
+      else {
+        booleanPass=false;
+
+      }*/
+
 
       if(myInput.innerText.length >0) {
 
         console.log("TestName: " + booleanNam);
 
-        if (!booleanPass) {
+          if (!booleanPass) {
 
-          document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.display = "block";
 
-          if (!booleanNam) {
-            document.getElementById("nameinput").style.display = "block";
-            document.getElementById("file").style.display = "block";
+            if (!booleanNam) {
+              document.getElementById("nameinput").style.display = "block";
+              document.getElementById("file").style.display = "block";
+            }
+            else {
+              document.getElementById("nameinput").style.display = "none";
+              document.getElementById("file").style.display = "none";
+            }
+
           }
+
           else {
-            document.getElementById("nameinput").style.display = "none";
-            document.getElementById("file").style.display = "none";
+            document.getElementById("message").style.display = "none";
           }
-
-        }
-
-        else {
-          document.getElementById("message").style.display = "none";
-        }
 
       }
 
-    }
+
+  }
+
+
 
 // When the user clicks outside of the password field, hide the message box
-    myInput.onblur = function() {
+   myInput.onblur = function() {
       if(!booleanPass || myInput.innerText === ""){
 
         if(!bollLength || !boolLetter || !boolCapital || !bollNumber) {
@@ -226,28 +296,30 @@ export class LoginComponent implements OnInit {
 
 
 // When the user starts to type something inside the password field
-
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
     myInput.onkeyup = function() {
 
+     // booleanPass = false;
       //  lowercase letters
       var lowerCaseLetters = /[a-z]/g;
       if ((<HTMLInputElement>myInput).value.match(lowerCaseLetters)) {
         letter.classList.remove("invalid");
         letter.classList.add("valid");
+<<<<<<< HEAD
+=======
+          boolLetter=true;
 
-        boolLetter=true;
-
-
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
       } else {
         boolLetter=false;
         letter.classList.remove("valid");
         letter.classList.add("invalid");
-
+       // booleanPass = false;
         document.getElementById("message").style.display = "block";
         (<HTMLInputElement>document.getElementById("butn")).disabled = true;
 
         button.onmouseover = function(){
-          document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.display = "block";
         }
 
       }
@@ -257,21 +329,22 @@ export class LoginComponent implements OnInit {
       if ((<HTMLInputElement>myInput).value.match(upperCaseLetters)) {
         capital.classList.remove("invalid");
         capital.classList.add("valid");
-
+<<<<<<< HEAD
+=======
         boolCapital = true;
 
 
-
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
       } else {
         boolCapital = false;
         capital.classList.remove("valid");
         capital.classList.add("invalid");
-        // booleanPass = false;
+       // booleanPass = false;
         document.getElementById("message").style.display = "block";
         (<HTMLInputElement>document.getElementById("butn")).disabled = true;
 
         button.onmouseover = function(){
-          document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.display = "block";
         }
 
       }
@@ -281,21 +354,22 @@ export class LoginComponent implements OnInit {
       if ((<HTMLInputElement>myInput).value.match(numbers)) {
         number.classList.remove("invalid");
         number.classList.add("valid");
-
+<<<<<<< HEAD
+=======
         bollNumber = true;
 
-
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
       } else {
         bollNumber = false;
         number.classList.remove("valid");
         number.classList.add("invalid");
-
+       // booleanPass = false;
         document.getElementById("message").style.display = "block";
         (<HTMLInputElement>document.getElementById("butn")).disabled = true;
 
         button.onmouseover = function(){
 
-          document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.display = "block";
         }
 
       }
@@ -304,37 +378,43 @@ export class LoginComponent implements OnInit {
       if ((<HTMLInputElement>myInput).value.length >= 8) {
         length.classList.remove("invalid");
         length.classList.add("valid");
-
+<<<<<<< HEAD
+=======
 
         bollLength = true;
 
 
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
       } else {
         bollLength = false;
         length.classList.remove("valid");
         length.classList.add("invalid");
-
+       // booleanPass = false;
         document.getElementById("message").style.display = "block";
         (<HTMLInputElement>document.getElementById("butn")).disabled = true;
 
 
         button.onmouseover = function(){
 
-          document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.display = "block";
 
-          if(username.innerText==="" || username.innerText.length < 3){
-            document.getElementById("nameinput").style.display = "block";
-            document.getElementById("file").style.display = "block";
+            if(username.innerText==="" || username.innerText.length < 3){
+              document.getElementById("nameinput").style.display = "block";
+              document.getElementById("file").style.display = "block";
 
+            }
+            else{
+              document.getElementById("nameinput").style.display = "none";
+              document.getElementById("file").style.display = "none";
+            }
           }
-          else{
-            document.getElementById("nameinput").style.display = "none";
-            document.getElementById("file").style.display = "none";
-          }
-        }
 
       }
+<<<<<<< HEAD
+    };
+  }
 
+=======
 
       if(booleanNam&&bollLength && boolLetter && boolCapital && bollNumber){
         document.getElementById("message").style.display = "none";
@@ -343,19 +423,28 @@ export class LoginComponent implements OnInit {
         (<HTMLInputElement>document.getElementById("butn")).disabled = false;
       } else{
         if(!booleanPass){
-          document.getElementById("message").style.display = "block";
-        }
+        document.getElementById("message").style.display = "block";
+      }
         (<HTMLInputElement>document.getElementById("butn")).disabled = true;
       }
 
       if(bollLength && bollNumber && boolCapital && boolLetter){
         booleanPass = true;
       }
+      //else{
+        //booleanPass = false;
+      //}
+
+    //  if(username.innerText===""){
+      //  booleanNam = false;
+     // }
 
     }
 
   }
 
+
+>>>>>>> Login Component Ergänzung, alle Fehlerangaben Abfragen, css
   handleFileInput(files: any) {
     this.fileToUpload = files.item(0);
     if (this.fileToUpload) {
