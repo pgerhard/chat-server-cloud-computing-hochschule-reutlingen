@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
     console.log("[1].." + e.target.elements[1].value);
     console.log("[2].." + e.target.elements[2].value);
 
-    var username = e.target.elements[1].value;
-    var passw = e.target.elements[2].value;
+    var username = e.target.elements[0].value;
+    var passw = e.target.elements[1].value;
 
 
     const user = new User();
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(user);
 
     console.log("Test_username: " + this.userService.loggedInUser.name);
-
+    
 
     this.btnClick();
 
