@@ -2,6 +2,8 @@ const Logger = require("./logger");
 const Room = require("./room");
 const User = require("./user");
 const IbmCloudObjectStorageClient = require("./ibmCloudObjectStorageClient");
+const LanguageTranslatorClient = require("./languageTranslatorClient");
+const MoodServiceClient = require("./moodServiceClient");
 const Encoder = require("./encoder");
 const environment = require("./environment");
 
@@ -13,13 +15,14 @@ var crypto = require("crypto");
 var lodash = require("lodash");
 var formidable = require("formidable");
 var fs = require("fs");
-var request = require("request");
 
 const generalRoomName = "General";
 const users = new Map();
 const rooms = new Map();
 const logger = new Logger();
 const ibmCosClient = new IbmCloudObjectStorageClient();
+const translatorClient = new LanguageTranslatorClient();
+const moodServiceClient = new MoodServiceClient();
 const encoder = new Encoder();
 
 app.use(function(req, res, next) {
@@ -277,22 +280,16 @@ function sendDisconnectedMessage(room, user) {
  * @param msg to send
  */
 function sendMessageToRoom(room, msg) {
-  request.post(
-    {
-      headers: {},
-      url: "https://ecstatic-ptolemy.eu-de.mybluemix.net/tone",
-      json: true,
-      body: {
-        texts: [msg._content]
-      }
-    },
-    function(error, response, body) {
-      console.log(body);
-      msg._mood = body.mood;
+  moodServiceClient.analyseMood(msg._content).then(mood => {
+    logger.debug(`Index: Detected mood is ${mood}`);
+    msg._mood = mood;
+
+    translatorClient.autotranslateText(msg._content, "de").then(translation => {
+      msg._content = translation;
       room.addMessage(msg);
       io.to(`${room.name}`).emit("broadcast_message", msg);
-    }
-  );
+    });
+  });
 }
 
 /**

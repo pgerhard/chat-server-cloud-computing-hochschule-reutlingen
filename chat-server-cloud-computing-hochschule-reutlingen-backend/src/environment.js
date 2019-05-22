@@ -10,5 +10,13 @@ module.exports = {
       profilePictures: "chat-app-server-profile-images",
       uploads: "chat-app-server-uploads"
     }
+  },
+  languageTranslator: {
+    endpoints: {
+      identify: "https://gateway-fra.watsonplatform.net/language-translator/api/v3/identify",
+      translate: "https://gateway-fra.watsonplatform.net/language-translator/api/v3/translate"
+    },
+    version: "2018-05-01",
+    authorization: "Basic YXBpa2V5OnRDcWNqTEVkbWh2a2x4cUtrcTdEMHFZeTFVc2F4TWwweFdDMzg1ckRrQnhX"
   }
 };

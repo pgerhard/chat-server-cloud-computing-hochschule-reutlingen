@@ -82,7 +82,7 @@ class IbmCloudObjectStorageClient {
       .then(data => {
         const bodyContentBuffer = Buffer.from(data.Body);
         if (data != null) {
-          console.log("File Contents: " + bodyContentBuffer.toString());
+          this.logger.debug(`IbmCloudObjectStorageClient: File Content ${bodyContentBuffer.toString()}`);
           return bodyContentBuffer;
         } else {
           this.logger.info(`IbmCloudObjectStorageClient: No object found for: \nbucket: ${bucket} \nkey: ${key}`);
@@ -90,7 +90,7 @@ class IbmCloudObjectStorageClient {
         }
       })
       .catch(e => {
-        console.error(`ERROR: ${e.code} - ${e.message}\n`);
+        this.logger.error(`IbmCloudObjectStorageClient: ${e.code} - ${e.message}\n`);
       });
   }
 
