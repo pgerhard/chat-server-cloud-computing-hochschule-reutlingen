@@ -5,7 +5,6 @@ const Environment = require("./environment");
 class MoodServiceClient {
   constructor() {
     this.logger = new Logger();
-    this.env = Environment;
   }
 
   analyseMood(text) {
@@ -16,25 +15,30 @@ class MoodServiceClient {
 
   _analyseMood(text) {
     return new Promise((resolve, reject) => {
-      request.post(
-        {
-          headers: {},
-          proxy: "http://192.168.52.252:8080",
-          url: "https://ecstatic-ptolemy.eu-de.mybluemix.net/tone",
-          json: true,
-          body: {
-            texts: [text]
-          }
-        },
-        function(error, response, body) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(response);
-          }
+      const requestConfiguration = {
+        headers: {},
+        url: "https://ecstatic-ptolemy.eu-de.mybluemix.net/tone",
+        json: true,
+        body: {
+          texts: [text]
         }
-      );
+      };
+
+      MoodServiceClient._configureProxy(requestConfiguration);
+      request.post(requestConfiguration, function(error, response, body) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      });
     });
+  }
+
+  static _configureProxy(requestConfiguration) {
+    if (Environment.proxy.enabled) {
+      requestConfiguration.proxy = Environment.proxy.url;
+    }
   }
 }
 

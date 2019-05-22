@@ -5,7 +5,6 @@ const Environment = require("./environment");
 class LanguageTranslatorClient {
   constructor() {
     this.logger = new Logger();
-    this.env = Environment;
   }
 
   autotranslateText(oText, tgtLanguage) {
@@ -33,54 +32,58 @@ class LanguageTranslatorClient {
 
   _identifyLanguage(text, callback) {
     return new Promise((resolve, reject) => {
-      request.post(
-        {
-          headers: {
-            Authorization: this.env.languageTranslator.authorization,
-            "Content-Type": "text/plain"
-          },
-          proxy: "http://192.168.52.252:8080",
-          url: this.env.languageTranslator.endpoints.identify,
-          qs: { version: this.env.languageTranslator.version },
-          body: text
+      const requestConfiguration = {
+        headers: {
+          Authorization: Environment.languageTranslator.authorization,
+          "Content-Type": "text/plain"
         },
-        function(error, response, body) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(response);
-          }
+        url: Environment.languageTranslator.endpoints.identify,
+        qs: { version: Environment.languageTranslator.version },
+        body: text
+      };
+
+      LanguageTranslatorClient._configureProxy(requestConfiguration);
+      request.post(requestConfiguration, function(error, response, body) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
         }
-      );
+      });
     });
   }
 
   _translateText(text, sourceLanguage, targetLanguage) {
     return new Promise((resolve, reject) => {
-      request.post(
-        {
-          headers: {
-            Authorization: this.env.languageTranslator.authorization,
-            "Content-Type": "application/json"
-          },
-          proxy: "http://192.168.52.252:8080",
-          url: this.env.languageTranslator.endpoints.translate,
-          qs: { version: this.env.languageTranslator.version },
-          json: true,
-          body: {
-            text: [text],
-            model_id: `${sourceLanguage}-${targetLanguage}`
-          }
+      const requestConfiguration = {
+        headers: {
+          Authorization: Environment.languageTranslator.authorization,
+          "Content-Type": "application/json"
         },
-        function(error, response, body) {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(response);
-          }
+        url: Environment.languageTranslator.endpoints.translate,
+        qs: { version: Environment.languageTranslator.version },
+        json: true,
+        body: {
+          text: [text],
+          model_id: `${sourceLanguage}-${targetLanguage}`
         }
-      );
+      };
+
+      LanguageTranslatorClient._configureProxy(requestConfiguration);
+      request.post(requestConfiguration, function(error, response, body) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      });
     });
+  }
+
+  static _configureProxy(requestConfiguration) {
+    if (Environment.proxy.enabled) {
+      requestConfiguration.proxy = Environment.proxy.url;
+    }
   }
 }
 

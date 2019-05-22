@@ -1,6 +1,11 @@
 module.exports = {
   force_https: false,
   logLevel: "DEBUG",
+  cloudant: {
+    endpoint:
+      "https://502a1efe-39a6-4dc7-99a2-cca4198ff949-bluemix:cd19e4c382ed7e83ab0d00ff4b13d49f58a7c8fda6ef8a605b19f891e6890a51@502a1efe-39a6-4dc7-99a2-cca4198ff949-bluemix.cloudantnosqldb.appdomain.cloud",
+    apiKey: "jDnhbSpu1DLhroDVC3bc0bJvML0JmprsnlcVIFRDu2iF"
+  },
   ibmCos: {
     endpoint: "https://s3.eu-de.cloud-object-storage.appdomain.cloud",
     apiKey: "e9-xGehpsH27knACuPfnS7Zw4wJlT80pN_ADYTujACAF",
@@ -18,5 +23,9 @@ module.exports = {
     },
     version: "2018-05-01",
     authorization: "Basic YXBpa2V5OnRDcWNqTEVkbWh2a2x4cUtrcTdEMHFZeTFVc2F4TWwweFdDMzg1ckRrQnhX"
+  },
+  proxy: {
+    enabled: false,
+    url: "http://192.168.52.252:8080"
   }
 };

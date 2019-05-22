@@ -104,6 +104,12 @@ app.get("/uploads/*", function(req, res) {
   res.download(`${__dirname}${req.url}`);
 });
 
+/**
+ * TODO: Preferred language in chat message
+ * TODO: Store profile picture
+ * TODO: Profile ability to load profile picture
+ */
+
 io.on("connection", function(socket) {
   console.log(`New Socket opened ${socket.id}`);
   socket.emit("connection_created");

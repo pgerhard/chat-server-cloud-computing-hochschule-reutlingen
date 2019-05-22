@@ -5,7 +5,9 @@
   "engines": {
     "node": ">=10.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@cloudant/cloudant": "^4.1.0"
+  },
   "scripts": {
     "start": "node chat-server-cloud-computing-hochschule-reutlingen-backend/standalone/index.js"
   },
