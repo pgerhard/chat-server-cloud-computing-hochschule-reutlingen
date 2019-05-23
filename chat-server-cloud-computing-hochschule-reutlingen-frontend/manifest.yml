@@ -1,4 +1,4 @@
 applications:
   - name: chat-app
-    memory: 128M
+    memory: 64M
     instances: 1
