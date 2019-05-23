@@ -5,9 +5,13 @@ const IbmCloudObjectStorageClient = require("./ibmCloudObjectStorageClient");
 const LanguageTranslatorClient = require("./languageTranslatorClient");
 const MoodServiceClient = require("./moodServiceClient");
 const Encoder = require("./encoder");
-const environment = require("./environment");
+const Environment = require("./environment");
+const CloudantClient = require("./cloudantClient");
+const csp = require(`helmet-csp`);
 
 let bodyParser = require("body-parser");
+
+var cors = require("cors");
 var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
@@ -15,8 +19,8 @@ var crypto = require("crypto");
 var lodash = require("lodash");
 var formidable = require("formidable");
 var fs = require("fs");
-
 const generalRoomName = "General";
+
 const users = new Map();
 const rooms = new Map();
 const logger = new Logger();
@@ -24,12 +28,16 @@ const ibmCosClient = new IbmCloudObjectStorageClient();
 const translatorClient = new LanguageTranslatorClient();
 const moodServiceClient = new MoodServiceClient();
 const encoder = new Encoder();
+const cloudantClient = new CloudantClient();
 
 app.use(function(req, res, next) {
+  cors();
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
 
-  res.setHeader("Content-Security-Policy", "default-src 'none'");
+  csp({ directives: { defaultSrc: ["'none'"], scriptSrc: ["*"], styleSrc: ["*"], imgSrc: ["'self'"] } });
+
+  // res.setHeader("Content-Security-Policy", "default-src 'none'");
   res.setHeader("X-XSS-Protection", "1; mode=block");
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("Referrer-Policy", "no-referrer-when-downgrade");
@@ -55,6 +63,8 @@ app.use(function(req, res, next) {
   }
 });
 
+app.options("*", cors());
+
 app.get("/", (req, res) => {
   res.write("Welcome to the Chat Server Backend. Please visit https://chat-app.eu-de.mybluemix.net to use the UI");
   res.status(200);
@@ -62,6 +72,18 @@ app.get("/", (req, res) => {
 });
 
 let jsonParser = bodyParser.json({ limit: "1mb" });
+app.get("/profile-picture/**", (req, res) => {
+  ibmCosClient.loadObject(Environment.ibmCos.buckets.profilePictures, "arina").then(object => {
+    const base64Image = object.toString();
+    res.writeHead(200, {
+      "Content-Type": "image/png:Base64",
+      "Content-Length": base64Image.length
+    });
+    console.log(base64Image);
+    res.end(base64Image);
+  });
+});
+
 app.post("/profile-picture", jsonParser, (req, res) => {
   logger.debug(`Index: Received request to store profile picture`);
   encoder
@@ -70,7 +92,11 @@ app.post("/profile-picture", jsonParser, (req, res) => {
       console.log(hashedKey);
       const key = hashedKey;
       console.log(key);
-      ibmCosClient.slimCreateObject(environment.ibmCos.buckets.profilePictures, key, req.body.data);
+      ibmCosClient.slimCreateObject(Environment.ibmCos.buckets.profilePictures, key, req.body.data);
+      return key;
+    })
+    .then(objectKey => {
+      cloudantClient.storeProfilePictureKey(req.body.username, objectKey);
     })
     .then(value => {
       res.status(201);
@@ -105,11 +131,10 @@ app.get("/uploads/*", function(req, res) {
 });
 
 /**
+ * TODO: Profile ability to load profile picture
  * TODO: Preferred language in chat message
  * TODO: Store profile picture
- * TODO: Profile ability to load profile picture
  */
-
 io.on("connection", function(socket) {
   console.log(`New Socket opened ${socket.id}`);
   socket.emit("connection_created");

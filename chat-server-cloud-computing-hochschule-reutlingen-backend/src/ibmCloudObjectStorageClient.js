@@ -68,7 +68,7 @@ class IbmCloudObjectStorageClient {
   loadObject(bucket, key) {
     this.logger.info(`IbmCloudObjectStorageClient: Loading object from: \nbucket: ${bucket} \nkey: ${key}`);
     this.logger.debug(`IbmCloudObjectStorageClient: Hashing key in order to load object`);
-    this.encoder
+    return this.encoder
       .md5Hash(key)
       .then(hashedKey => {
         this.logger.debug(`IbmCloudObjectStorageClient: Hashed key to use for loading object ${hashedKey}`);

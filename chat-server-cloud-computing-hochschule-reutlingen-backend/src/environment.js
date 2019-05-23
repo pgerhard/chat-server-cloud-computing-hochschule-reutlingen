@@ -1,5 +1,5 @@
 module.exports = {
-  force_https: false,
+  force_https: true,
   logLevel: "DEBUG",
   cloudant: {
     endpoint:

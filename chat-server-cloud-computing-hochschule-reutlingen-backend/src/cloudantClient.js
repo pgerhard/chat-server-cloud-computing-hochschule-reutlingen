@@ -5,6 +5,7 @@ const Cloudant = require("@cloudant/cloudant");
 class CloudantClient {
   constructor() {
     this.logger = new Logger();
+    this.profilePictureDatabase = "profile-pictures";
 
     const config = {
       url: Environment.cloudant.endpoint,
@@ -70,6 +71,37 @@ class CloudantClient {
         proxy: Environment.proxy.url
       };
     }
+  }
+
+  storeProfilePictureKey(username, key) {
+    this.logger.info(`CloudantClient: Storing username and profile picture key:\n Username: ${username},\n Key: ${key}`);
+
+    const document = { username: username, key: key };
+    this.initDatabase(this.profilePictureDatabase)
+      .then(() => {
+        this.cloudant.use(this.profilePictureDatabase).insert(document, username);
+      })
+      .then(data => {
+        this.logger.info(`CloudantClient: Stored document ${JSON.stringify(document)}`);
+      })
+      .catch(err => this.logger.error(`CloudantClient: Failed to store document ${JSON.stringify(document)}`));
+  }
+
+  loadProfilePictureKey(username) {
+    this.logger.info(`CloudantClient: Loading profile picture key:\n Username: ${username}`);
+
+    return this._checkIfDbExists(this.profilePictureDatabase)
+      .then(dbExists => {
+        if (!dbExists) {
+          return Promise.reject(`Profile picture database does not exist.`);
+        }
+      })
+      .then(() => {
+        return this.cloudant.use(this.profilePictureDatabase).get(username);
+      })
+      .then(response => {
+        return response.key;
+      });
   }
 }
 
